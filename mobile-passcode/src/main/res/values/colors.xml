@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="gray_dark">#BB666666</color>
+    <color name="passcode_primary">#03A9F4</color>
+    <color name="light_grey">#ffd1d1d1</color>
+</resources>
