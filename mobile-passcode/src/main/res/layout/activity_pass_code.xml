@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin">
-                <com.mifos.mobile_passcode.MifosPassCodeView
+                <com.mifos.mobile.passcode.MifosPassCodeView
                     android:layout_width="150dp"
                     android:layout_height="40dp"
                     android:id="@+id/pv_passcode"

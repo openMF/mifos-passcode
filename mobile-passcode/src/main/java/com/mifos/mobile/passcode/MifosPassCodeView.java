@@ -1,4 +1,5 @@
-package com.mifos.mobile_passcode;
+package com.mifos.mobile.passcode;
+
 
 import android.content.Context;
 import android.content.res.TypedArray;

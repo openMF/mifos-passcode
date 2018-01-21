@@ -1,4 +1,5 @@
-package com.mifos.mobile_passcode.utils;
+package com.mifos.mobile.passcode.utils;
+
 
 import android.content.Context;
 import android.content.SharedPreferences;

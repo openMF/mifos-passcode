@@ -1,4 +1,4 @@
-package com.mifos.mobile_passcode;
+package com.mifos.mobile.passcode;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,12 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mifos.mobile_passcode.utils.PassCodeConstants;
-import com.mifos.mobile_passcode.utils.EncryptionUtil;
-import com.mifos.mobile_passcode.utils.PassCodeNetworkChecker;
-import com.mifos.mobile_passcode.utils.PasscodePreferencesHelper;
+import com.mifos.mobile.passcode.utils.EncryptionUtil;
+import com.mifos.mobile.passcode.utils.PassCodeConstants;
+import com.mifos.mobile.passcode.utils.PassCodeNetworkChecker;
+import com.mifos.mobile.passcode.utils.PasscodePreferencesHelper;
 
-public abstract class MifosPassCodeActivity extends AppCompatActivity implements MifosPassCodeView.PassCodeListener {
+
+public abstract class MifosPassCodeActivity extends AppCompatActivity implements MifosPassCodeView.
+        PassCodeListener {
 
     NestedScrollView clRootview;
     AppCompatButton btnForgotPasscode;
@@ -33,6 +35,17 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
     private boolean isPassCodeVerified;
     private String strPassCodeEntered;
     private PasscodePreferencesHelper passcodePreferencesHelper;
+
+    public abstract int getLogo();
+
+    public abstract void startNextActivity();
+
+    public abstract void startLoginActivity();
+
+    public abstract void showToaster(View view, int msg);
+
+    @EncryptionUtil.TYPE
+    public abstract int getEncryptionType();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +64,8 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
         ivLogo.setImageResource(getLogo());
         passcodePreferencesHelper = new PasscodePreferencesHelper(this);
 
-        isInitialScreen = getIntent().getBooleanExtra(PassCodeConstants.PASSCODE_INITIAL_LOGIN, false);
+        isInitialScreen = getIntent().getBooleanExtra(PassCodeConstants.PASSCODE_INITIAL_LOGIN,
+                false);
         isPassCodeVerified = false;
         strPassCodeEntered = "";
 
@@ -66,20 +80,29 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
 
     }
 
-    public abstract int getLogo();
+    private String encryptPassCode(String passCode) {
+        @EncryptionUtil.TYPE int type = getEncryptionType();
+        String encryptedPassCode = null;
+        switch (type) {
+            case EncryptionUtil.MOBILE_BANKING:
+                encryptedPassCode = EncryptionUtil.getMobileBankingHash(passCode);
+                break;
+            case EncryptionUtil.ANDROID_CLIENT:
+                encryptedPassCode = EncryptionUtil.getAndroidClientHash(passCode);
+                break;
+            case EncryptionUtil.FINERACT_CN:
+                encryptedPassCode = EncryptionUtil.getFineractCNHash(passCode);
+                break;
+            case EncryptionUtil.DEFAULT:
+                encryptedPassCode = EncryptionUtil.getDefaultHash(passCode);
+                break;
+        }
 
-    public abstract void startNextActivity();
-
-    public abstract void startLoginActivity();
-
-    public abstract void showToaster(View view, int msg);
-
-    public void clearTokenPreferences(){
-        passcodePreferencesHelper.clear();
+        return encryptedPassCode;
     }
 
-    public void updateBaseApiManager() {
-        //optional may be required to update the baseapimanager with the token
+    public void clearTokenPreferences() {
+        passcodePreferencesHelper.clear();
     }
 
     public void skip(View v) {
@@ -94,7 +117,7 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
         if (isPassCodeLengthCorrect()) {
             if (isPassCodeVerified) {
                 if (strPassCodeEntered.compareTo(mifosPassCodeView.getPasscode()) == 0) {
-                    passcodePreferencesHelper.savePassCode(EncryptionUtil.getHash(mifosPassCodeView.
+                    passcodePreferencesHelper.savePassCode(encryptPassCode(mifosPassCodeView.
                             getPasscode()));
                     startHomeActivity();
                 } else {
@@ -134,9 +157,8 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
         }
 
         if (isPassCodeLengthCorrect()) {
-            String passwordEntered = EncryptionUtil.getHash(mifosPassCodeView.getPasscode());
+            String passwordEntered = encryptPassCode(mifosPassCodeView.getPasscode());
             if (passcodePreferencesHelper.getPassCode().equals(passwordEntered)) {
-                updateBaseApiManager();
                 startHomeActivity();
             } else {
                 counter++;

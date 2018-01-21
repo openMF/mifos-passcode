@@ -1,6 +1,6 @@
 package com.mifos.passcode;
 
-import com.mifos.mobile_passcode.BasePassCodeActivity;
+import com.mifos.mobile.passcode.BasePassCodeActivity;
 
 /**
  * Created by dilpreet on 19/01/18.

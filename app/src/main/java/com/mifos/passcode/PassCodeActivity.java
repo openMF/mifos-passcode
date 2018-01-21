@@ -1,10 +1,10 @@
 package com.mifos.passcode;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.mifos.mobile_passcode.MifosPassCodeActivity;
+import com.mifos.mobile.passcode.MifosPassCodeActivity;
+import com.mifos.mobile.passcode.utils.EncryptionUtil;
 
 /**
  * Created by dilpreet on 19/01/18.
@@ -32,6 +32,11 @@ public class PassCodeActivity extends MifosPassCodeActivity {
     public void showToaster(View view, int msg) {
         //show prompts in toast or using snackbar
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public int getEncryptionType() {
+        return EncryptionUtil.DEFAULT;
     }
 
 }

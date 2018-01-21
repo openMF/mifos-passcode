@@ -1,4 +1,5 @@
-package com.mifos.mobile_passcode.utils;
+package com.mifos.mobile.passcode.utils;
+
 
 /**
  * Created by dilpreet on 19/01/18.

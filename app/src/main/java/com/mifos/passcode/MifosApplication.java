@@ -2,7 +2,7 @@ package com.mifos.passcode;
 
 import android.app.Application;
 
-import com.mifos.mobile_passcode.utils.ForegroundChecker;
+import com.mifos.mobile.passcode.utils.ForegroundChecker;
 
 /**
  * Created by dilpreet on 19/01/18.

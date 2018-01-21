@@ -1,10 +1,9 @@
-package com.mifos.mobile_passcode;
+package com.mifos.mobile.passcode;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
-import com.mifos.mobile_passcode.utils.PassCodeConstants;
-import com.mifos.mobile_passcode.utils.ForegroundChecker;
+import com.mifos.mobile.passcode.utils.ForegroundChecker;
+
 
 /**
  * Created by dilpreet on 19/01/18.
