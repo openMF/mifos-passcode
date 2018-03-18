@@ -106,7 +106,16 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
     }
 
     public void skip(View v) {
-        startHomeActivity();
+        if (isPassCodeVerified) {
+            btnSkip.setText(getString(R.string.skip));
+            btnSave.setText(getString(R.string.proceed));
+            tvPasscodeIntro.setText(getString(R.string.enter_passcode));
+            strPassCodeEntered = "";
+            mifosPassCodeView.clearPasscodeField();
+            isPassCodeVerified = false;
+        } else {
+            startHomeActivity();
+        }
     }
 
     /**
@@ -125,7 +134,7 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
                     mifosPassCodeView.clearPasscodeField();
                 }
             } else {
-                btnSkip.setVisibility(View.INVISIBLE);
+                btnSkip.setText(getString(R.string.back));
                 btnSave.setText(getString(R.string.save));
                 tvPasscodeIntro.setText(getString(R.string.reenter_passcode));
                 strPassCodeEntered = mifosPassCodeView.getPasscode();
@@ -138,6 +147,7 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
 
     /**
      * It is a callback for {@link MifosPassCodeView}, provides with the passcode entered by user
+     *
      * @param passcode
      */
     @Override
@@ -176,6 +186,7 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
 
     /**
      * Checks for internet availability
+     *
      * @return Returns true if connected else returns false
      */
     private boolean isInternetAvailable() {
@@ -247,6 +258,7 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
 
     /**
      * Checks whether passcode entered is of correct length
+     *
      * @return Returns true if passcode lenght is 4 else shows message
      */
     private boolean isPassCodeLengthCorrect() {

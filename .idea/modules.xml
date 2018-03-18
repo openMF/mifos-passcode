@@ -3,8 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mobile-passcode/mobile-passcode.iml" filepath="$PROJECT_DIR$/mobile-passcode/mobile-passcode.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mobile_passcode.iml" filepath="$PROJECT_DIR$/mobile_passcode.iml" />
+      <module fileurl="file://C:\Users\ankur\Documents\Android Projects\GSOC\mobile-passcode\app\app.iml" filepath="C:\Users\ankur\Documents\Android Projects\GSOC\mobile-passcode\app\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mobile-passcode.iml" filepath="$PROJECT_DIR$/mobile-passcode.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mobile-passcode/mobile-passcode-mobile-passcode.iml" filepath="$PROJECT_DIR$/mobile-passcode/mobile-passcode-mobile-passcode.iml" />
     </modules>
   </component>
 </project>
