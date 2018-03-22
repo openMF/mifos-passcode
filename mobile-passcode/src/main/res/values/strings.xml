@@ -5,6 +5,7 @@
     <string name="incorrect_passcode">Incorrect Passcode</string>
     <string name="incorrect_passcode_more_than_three">You have entered incorrect Passcode more than 3 times</string>
     <string name="skip">Skip</string>
+    <string name="back">Back</string>
     <string name="save">Save</string>
     <string name="proceed">Proceed</string>
     <string name="passcode_setup">Setup a passcode to login</string>
