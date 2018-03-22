@@ -7,7 +7,7 @@ Library for passcode implementation along with an optional additional feature to
 
 For a basic implementation of the PassCode Screen
 
-```
+```java
 public class PassCodeActivity extends MifosPassCodeActivity {
 
     @Override
@@ -47,7 +47,7 @@ There are 4 different types of encryption methods available with respect to our 
  - FINERACT_CN
  
 To access the passcode stored use `PasscodePreferencesHelper`
-```
+```java
 PasscodePreferencesHelper pref = new PasscodePreferencesHelper(context);
 pref.getPassCode();// it will return encrypted passcode according to the encryption type chosen.
 
@@ -57,7 +57,7 @@ pref.getPassCode();// it will return encrypted passcode according to the encrypt
 
 Create a `BaseActivity` which should extend `BasePassCodeActivity` and extend this class for all your activities
 
-```
+```java
 public class BaseActivity extends BasePassCodeActivity {
 
     @Override
@@ -71,7 +71,7 @@ public class BaseActivity extends BasePassCodeActivity {
 
 In your application class add:
 
-```
+```java
 public class MifosApplication extends Application {
 
     @Override
