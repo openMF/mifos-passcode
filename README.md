@@ -1,6 +1,30 @@
 # mobile-passcode
 Library for passcode implementation along with an optional additional feature to ask for passcode when your app resumes from background. (Works with minSDK >= 15)
 
+Usage
+-----
+
+In order to use the library
+
+**1. Gradle dependency**
+
+  -  Add the following to your project level `build.gradle`:
+
+```gradle
+allprojects {
+	repositories {
+		maven { url 'https://dl.bintray.com/mifos/maven/' }
+	}
+}
+```
+  -  Add this to your app `build.gradle`:
+
+```gradle
+dependencies {
+	implementation 'com.mifos.mobile:mifos-passcode:0.3.0'
+}
+```
+
 ## Example
 
 <img src="https://raw.githubusercontent.com/openMF/mobile-passcode/master/graphic/demo.png" width=250 height=450/>
