@@ -73,11 +73,11 @@ public class MifosPassCodeView extends View {
                 if (!isPasscodeVisible) {
                     canvas.drawCircle(xPosition, getHeight() / 2, 8f, fillCirclePaint);
                 } else {
-                    canvas.drawText(passwordList.get(i - 1), xPosition , getHeight() / 2 +
+                    canvas.drawText(passwordList.get(i - 1), xPosition, getHeight() / 2 +
                             getHeight() / 8, fillCirclePaint);
                 }
             } else {
-                canvas.drawCircle(xPosition , getHeight() / 2, 8f, emptyCirclePaint);
+                canvas.drawCircle(xPosition, getHeight() / 2, 8f, emptyCirclePaint);
             }
             xPosition += getWidth() / PASSWORD_LENGTH;
         }

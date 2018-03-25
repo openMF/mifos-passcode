@@ -111,9 +111,9 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
 
     /**
      * Saves the passcode by encrypting it which we got from {@link MifosPassCodeView}
+     * @param view Passcode View
      */
-
-    public void savePassCode(View v) {
+    public void savePassCode(View view) {
         if (isPassCodeLengthCorrect()) {
             if (isPassCodeVerified) {
                 if (strPassCodeEntered.compareTo(mifosPassCodeView.getPasscode()) == 0) {
@@ -138,7 +138,7 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
 
     /**
      * It is a callback for {@link MifosPassCodeView}, provides with the passcode entered by user
-     * @param passcode
+     * @param passcode Passcode that is entered by user.
      */
     @Override
     public void passCodeEntered(String passcode) {
@@ -232,9 +232,9 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
     }
 
     /**
-     * Changes PasscodeView to text if it was hidden and vice a versa
+     * @param view PasscodeView that changes to text if it was hidden and vice a versa
      */
-    public void visibilityChange(View v) {
+    public void visibilityChange(View view) {
         mifosPassCodeView.revertPassCodeVisibility();
         if (!mifosPassCodeView.passcodeVisible()) {
             ivVisibility.setColorFilter(ContextCompat.getColor(MifosPassCodeActivity.this,
