@@ -1,0 +1,75 @@
+apply plugin: 'com.android.library'
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'mifos-passcode'
+
+    publishedGroupId = 'com.mifos.mobile'
+    libraryName = 'mifos-passcode'
+    artifact = 'mifos-passcode' // artifact name and library name should be same.
+
+    libraryDescription = 'A Library as feature of passcode'
+
+    siteUrl = 'https://github.com/openMF/mobile-passcode'
+    gitUrl = 'https://github.com/openMF/mobile-passcode.git'
+
+    libraryVersion = '0.3.0'
+
+    developerId = 'mifos'
+    developerName = 'Mifos Initiative'
+    developerEmail = 'info@mifos.org'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+android {
+    compileSdkVersion 26
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName "0.3.0"
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "com.android.support:design:26.1.0"
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+}
+
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+}
+
+// Place it at the end of the file
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+
+// Used this article to release the library
+// https://inthecheesefactory.com/blog/how-to-upload-library-to-jcenter-maven-central-as-dependency/en
+
+// Add these line in local.properties to direct release on bintray
+//bintray.user=YOUR_BINTRAY_USERNAME
+//bintray.apikey=YOUR_BINTRAY_API_KEY
+//bintray.gpg.password=YOUR_GPG_PASSWORD

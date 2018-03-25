@@ -1,1 +1,1 @@
-include ':app', ':mobile-passcode'
+include ':app', ':mifos-passcode'
