@@ -13,7 +13,7 @@ In order to use the library
 ```gradle
 allprojects {
 	repositories {
-		maven { url 'https://dl.bintray.com/mifos/maven/' }
+		jcenter()
 	}
 }
 ```
