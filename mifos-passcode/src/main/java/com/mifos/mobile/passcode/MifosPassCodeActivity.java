@@ -44,6 +44,8 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
 
     public abstract void showToaster(View view, int msg);
 
+    public abstract int getAppTheme();
+
     @EncryptionUtil.TYPE
     public abstract int getEncryptionType();
 
@@ -60,6 +62,7 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
         tvPasscodeIntro = findViewById(R.id.tv_passcode);
         ivVisibility = findViewById(R.id.iv_visibility);
         ivLogo = findViewById(R.id.iv_logo);
+        setTheme(getAppTheme());
 
         ivLogo.setImageResource(getLogo());
         passcodePreferencesHelper = new PasscodePreferencesHelper(this);
