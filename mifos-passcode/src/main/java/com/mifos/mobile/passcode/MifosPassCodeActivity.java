@@ -8,6 +8,8 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +31,7 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
     TextView tvPasscodeIntro;
     ImageView ivVisibility;
     ImageView ivLogo;
-
+    Animation shakeAnimation;
     private int counter = 0;
     private boolean isInitialScreen;
     private boolean isPassCodeVerified;
@@ -60,6 +62,7 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
         tvPasscodeIntro = findViewById(R.id.tv_passcode);
         ivVisibility = findViewById(R.id.iv_visibility);
         ivLogo = findViewById(R.id.iv_logo);
+        shakeAnimation = AnimationUtils.loadAnimation(this, R.anim.shake);
 
         ivLogo.setImageResource(getLogo());
         passcodePreferencesHelper = new PasscodePreferencesHelper(this);
@@ -161,6 +164,7 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
             if (passcodePreferencesHelper.getPassCode().equals(passwordEntered)) {
                 startHomeActivity();
             } else {
+                mifosPassCodeView.startAnimation(shakeAnimation);
                 counter++;
                 mifosPassCodeView.clearPasscodeField();
                 showToaster(clRootview, R.string.incorrect_passcode);
