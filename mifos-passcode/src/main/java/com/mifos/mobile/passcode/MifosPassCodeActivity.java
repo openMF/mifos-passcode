@@ -3,6 +3,7 @@ package com.mifos.mobile.passcode;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +38,7 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
     private boolean isPassCodeVerified;
     private String strPassCodeEntered;
     private PasscodePreferencesHelper passcodePreferencesHelper;
+    private final long TIME_DELAY = 100;
 
     public abstract int getLogo();
 
@@ -166,8 +168,18 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
             } else {
                 mifosPassCodeView.startAnimation(shakeAnimation);
                 counter++;
-                mifosPassCodeView.clearPasscodeField();
-                showToaster(clRootview, R.string.incorrect_passcode);
+                new CountDownTimer(TIME_DELAY,TIME_DELAY) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        mifosPassCodeView.clearPasscodeField();
+                        showToaster(clRootview, R.string.incorrect_passcode);
+                    }
+                }.start();
             }
         }
     }
