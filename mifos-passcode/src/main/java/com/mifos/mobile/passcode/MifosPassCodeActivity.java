@@ -106,7 +106,16 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
     }
 
     public void skip(View v) {
-        startHomeActivity();
+        if (isPassCodeVerified) {
+            btnSkip.setText(getString(R.string.skip));
+            btnSave.setText(getString(R.string.proceed));
+            tvPasscodeIntro.setText(getString(R.string.enter_passcode));
+            strPassCodeEntered = "";
+            mifosPassCodeView.clearPasscodeField();
+            isPassCodeVerified = false;
+        } else {
+            startHomeActivity();
+        }
     }
 
     /**
@@ -125,7 +134,7 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
                     mifosPassCodeView.clearPasscodeField();
                 }
             } else {
-                btnSkip.setVisibility(View.INVISIBLE);
+                btnSkip.setText(getString(R.string.back));
                 btnSave.setText(getString(R.string.save));
                 tvPasscodeIntro.setText(getString(R.string.reenter_passcode));
                 strPassCodeEntered = mifosPassCodeView.getPasscode();
