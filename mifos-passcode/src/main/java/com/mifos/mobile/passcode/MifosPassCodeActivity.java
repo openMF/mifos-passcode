@@ -37,6 +37,7 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
     private boolean isPassCodeVerified;
     private String strPassCodeEntered;
     private PasscodePreferencesHelper passcodePreferencesHelper;
+    private boolean resetPasscode;
 
     public abstract int getLogo();
 
@@ -69,6 +70,7 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
 
         isInitialScreen = getIntent().getBooleanExtra(PassCodeConstants.PASSCODE_INITIAL_LOGIN,
                 false);
+        resetPasscode = getIntent().getBooleanExtra(PassCodeConstants.RESET_PASSCODE, false);
         isPassCodeVerified = false;
         strPassCodeEntered = "";
 
@@ -81,6 +83,12 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
             mifosPassCodeView.setPassCodeListener(this);
         }
 
+        if (resetPasscode) {
+            btnSkip.setVisibility(View.GONE);
+            btnSave.setVisibility(View.GONE);
+            tvPasscodeIntro.setVisibility(View.VISIBLE);
+            tvPasscodeIntro.setText(R.string.confirm_passcode);
+        }
     }
 
     private String encryptPassCode(String passCode) {
@@ -162,6 +170,10 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
         if (isPassCodeLengthCorrect()) {
             String passwordEntered = encryptPassCode(mifosPassCodeView.getPasscode());
             if (passcodePreferencesHelper.getPassCode().equals(passwordEntered)) {
+                if (resetPasscode) {
+                    resetPasscode();
+                    return;
+                }
                 startHomeActivity();
             } else {
                 mifosPassCodeView.startAnimation(shakeAnimation);
@@ -285,5 +297,16 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
         if (isInitialScreen) {
             super.onBackPressed();
         }
+    }
+
+    private void resetPasscode() {
+        resetPasscode = false;
+        btnSkip.setVisibility(View.VISIBLE);
+        btnSave.setVisibility(View.VISIBLE);
+        tvPasscodeIntro.setText(R.string.passcode_setup);
+        counter = 0;
+        mifosPassCodeView.clearPasscodeField();
+        mifosPassCodeView.setPassCodeListener(null);
+        passcodePreferencesHelper.clear();
     }
 }
