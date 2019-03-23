@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file("../default_key_store.jks")
+            storePassword "mifos1234"
+            keyAlias "mifos-passcode"
+            keyPassword "mifos1234"
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.mifos.passcode"
@@ -12,6 +20,7 @@ android {
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
