@@ -3,10 +3,6 @@ package com.mifos.mobile.passcode;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -18,6 +14,11 @@ import com.mifos.mobile.passcode.utils.EncryptionUtil;
 import com.mifos.mobile.passcode.utils.PassCodeConstants;
 import com.mifos.mobile.passcode.utils.PassCodeNetworkChecker;
 import com.mifos.mobile.passcode.utils.PasscodePreferencesHelper;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 
 
 public abstract class MifosPassCodeActivity extends AppCompatActivity implements MifosPassCodeView.

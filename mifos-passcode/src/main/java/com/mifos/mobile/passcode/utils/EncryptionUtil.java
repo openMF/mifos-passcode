@@ -1,10 +1,11 @@
 package com.mifos.mobile.passcode.utils;
 
-import android.support.annotation.IntDef;
 import android.util.Log;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import androidx.annotation.IntDef;
 
 /**
  * Created by dilpreet on 11/7/17.

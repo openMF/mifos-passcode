@@ -1,8 +1,8 @@
 package com.mifos.mobile.passcode;
 
-import android.support.v7.app.AppCompatActivity;
-
 import com.mifos.mobile.passcode.utils.ForegroundChecker;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 
 /**

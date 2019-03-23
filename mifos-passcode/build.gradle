@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/openMF/mobile-passcode'
     gitUrl = 'https://github.com/openMF/mobile-passcode.git'
 
-    libraryVersion = '0.3.0'
+    libraryVersion = '1.0.0'
 
     developerId = 'mifos'
     developerName = 'Mifos Initiative'
@@ -25,15 +25,15 @@ ext {
 }
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 28
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 26
-        versionCode 1
-        versionName "0.3.0"
+        targetSdkVersion 28
+        versionCode 2
+        versionName "1.0.0"
         vectorDrawables.useSupportLibrary = true
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -48,12 +48,12 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation "com.android.support:design:26.1.0"
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.google.android.material:material:1.1.0-alpha04'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha03'
 
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'androidx.test:runner:1.1.2-alpha02'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha02'
 }
 
 tasks.withType(Javadoc) {

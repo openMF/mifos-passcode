@@ -21,7 +21,7 @@ allprojects {
 
 ```gradle
 dependencies {
-	implementation 'com.mifos.mobile:mifos-passcode:0.3.0'
+	implementation 'com.mifos.mobile:mifos-passcode:1.0.0'
 }
 ```
 
