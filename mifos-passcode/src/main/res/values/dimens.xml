@@ -7,4 +7,8 @@
     <dimen name="default_margin">8dp</dimen>
     <dimen name="text_large">20sp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fp_dialog_padding">24dp</dimen>
+    <dimen name="fp_dialog_title_margin_bottom">20dp</dimen>
+    <dimen name="fp_dialog_status_text_size">16sp</dimen>
+    <dimen name="fp_dialog_message_margin_bottom">28dp</dimen>
 </resources>
