@@ -25,4 +25,15 @@
     <string name="nine">9</string>
     <string name="zero">0</string>
     <string name="title_activity_main">MainActivity</string>
+
+    <string name="fp_dialog_status">Touch the Sensor</string>
+    <string name="fp_dialog_message">Use your fingerprint to access the app</string>
+    <string name="fp_dialog_title">Login to Mifos</string>
+    <string name="fp_dialog_cancel">Use password instead</string>
+    <string name="touch_the_sensor">Touch the Sensor</string>
+    <string name="finger_print_not_recognized">Fingerprint Not Recognized</string>
+    <string name="authentication_successful">Authentication Successful</string>
+    <string name="authentication_cancelled">Authentication Cancelled</string>
+    <string name="fingerprint">Fingerprint</string>
+    <string name="FingerprintEnableMessage">Do you want to enable Fingerprint Authentication?</string>
 </resources>

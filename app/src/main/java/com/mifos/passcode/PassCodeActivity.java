@@ -39,4 +39,9 @@ public class PassCodeActivity extends MifosPassCodeActivity {
         return EncryptionUtil.DEFAULT;
     }
 
+    @Override
+    public String getFpDialogTitle() {
+        //Title to be shown for Fingerprint Dialog
+        return getString(R.string.fingerprint_dialog_title);
+    }
 }
