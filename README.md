@@ -1,5 +1,6 @@
 # mobile-passcode
-Library for passcode implementation along with an optional additional feature to ask for passcode when your app resumes from background. (Works with minSDK >= 15)
+Library for Passcode and Fingerprint Authentication implementation along with an optional additional
+feature to ask for passcode when your app resumes from background. (Works with minSDK >= 15)
 
 Usage
 -----
@@ -60,9 +61,34 @@ public class PassCodeActivity extends MifosPassCodeActivity {
         return EncryptionUtil.DEFAULT;
     }
 
+    @Override
+    public String getFpDialogTitle() {
+        //Title to be shown for Fingerprint Dialog
+        return getString(R.string.fingerprint_dialog_title);
+    }
 }
 
 ```
+
+## Fingerprint Authentication
+
+ - Mention the title of Fingerprint Dialog by overriding **getFpDialogTitle()** method.
+
+ - If the device supports Fingerprint Authentication, then a dialog will be shown to the user to enable Fingerprint
+   Authentication at first time. If the user chooses "No", then he/she will be prompted to the Passcode Screen.
+
+ - If the user opts for Fingerprint Authentication, then a dialog will appear asking user to "Touch the Sensor" in
+   order to access the app.
+
+ - On **successful** authentication, **startNextActivity()** method will be executed.
+
+ - In case the Authentication **fails**, then after a 1 second delay, the dialog will again ask for Authentication.
+
+ - There is also an option to **cancel** Fingerprint Authentication, if chosen results in the execution of
+   **StartLoginActivity()** method.
+
+ - This feature won't work if the Device doesn't have a fingerprint scanner or if the Android Version is below
+   **Android Marshmallow (Android 6)**. In this case, the user will be directly prompted to the Passcode Screen.
 
 There are 4 different types of encryption methods available with respect to our Android Projects:
  - DEFAULT
