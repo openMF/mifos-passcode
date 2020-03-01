@@ -81,6 +81,7 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
             AlertDialog.Builder builder = new AlertDialog.Builder(this,
                     R.style.MaterialAlertDialogStyle);
             builder.setTitle(R.string.fingerprint);
+            builder.setIcon(R.drawable.ic_fingerprint_blue_48dp);
             builder.setMessage(R.string.FingerprintEnableMessage);
             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
