@@ -307,7 +307,7 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
     public void visibilityChange(View view) {
         mifosPassCodeView.revertPassCodeVisibility();
         if (!mifosPassCodeView.passcodeVisible()) {
-            ivVisibility.setImageResource(R.drawable.ic_visibility_48px);
+            ivVisibility.setImageResource(R.drawable.ic_visibility_on_48px);
         } else {
             ivVisibility.setImageResource(R.drawable.ic_visibility_off_24dp);
         }
