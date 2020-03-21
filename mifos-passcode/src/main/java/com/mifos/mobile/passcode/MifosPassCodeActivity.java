@@ -222,9 +222,9 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
                     resetPasscode();
                     return;
                 }
-                Toast.makeText(this, "Login Successfully",
-                        Toast.LENGTH_SHORT).show();
-
+Toast toast = Toast.makeText(this, Html.fromHtml("<font color='#000000' ><b>" + info + "</b></font>"), Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.BOTTOM, 0, 0);
+                toast.show();
                 startHomeActivity();
             } else {
                 mifosPassCodeView.startAnimation(shakeAnimation);
