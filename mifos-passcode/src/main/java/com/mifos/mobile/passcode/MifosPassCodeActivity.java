@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
+import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -222,8 +224,12 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
                     resetPasscode();
                     return;
                 }
-                Toast.makeText(this, "Login Successfully",
-                        Toast.LENGTH_SHORT).show();
+
+//                Toast.makeText(this, "Login Successfully",Toast.LENGTH_SHORT).show();
+                String info="Login Successfully";
+                Toast toast = Toast.makeText(this, Html.fromHtml("<font color='#000000' ><b>" + info + "</b></font>"), Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.BOTTOM, 0, 0);
+                toast.show();
 
                 startHomeActivity();
             } else {
