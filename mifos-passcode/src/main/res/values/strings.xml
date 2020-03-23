@@ -37,5 +37,4 @@
     <string name="fingerprint">Fingerprint</string>
     <string name="FingerprintEnableMessage">Do you want to enable Fingerprint Authentication?</string>
     <string name="LSuccess">Login Successfully</string>
-
 </resources>

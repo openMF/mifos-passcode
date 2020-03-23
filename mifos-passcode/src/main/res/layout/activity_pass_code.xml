@@ -43,6 +43,7 @@
                 android:gravity="center|start"
                 android:text="@string/passcode_setup"
                 android:textSize="@dimen/text_large" />
+
             <TextView
                 android:id="@+id/tv_waiting"
                 android:layout_width="wrap_content"
@@ -50,6 +51,7 @@
                 android:layout_marginBottom="@dimen/default_margin"
                 android:gravity="center|start"
                 android:textSize="@dimen/text_large" />
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
