@@ -1,8 +1,13 @@
 package com.mifos.mobile.passcode;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
+import android.text.Html;
+import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -15,21 +20,23 @@ import com.mifos.mobile.passcode.utils.PassCodeConstants;
 import com.mifos.mobile.passcode.utils.PassCodeNetworkChecker;
 import com.mifos.mobile.passcode.utils.PasscodePreferencesHelper;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 
+import java.util.concurrent.TimeUnit;
 
 public abstract class MifosPassCodeActivity extends AppCompatActivity implements MifosPassCodeView.
         PassCodeListener {
-
+   public int count;
     NestedScrollView clRootview;
     AppCompatButton btnForgotPasscode;
     MifosPassCodeView mifosPassCodeView;
     AppCompatButton btnSkip;
     AppCompatButton btnSave;
-    TextView tvPasscodeIntro;
+    TextView tvPasscodeIntro,tv_timer;
     ImageView ivVisibility;
     ImageView ivLogo;
     Animation shakeAnimation;
@@ -41,6 +48,8 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
     private boolean resetPasscode;
 
     public abstract int getLogo();
+
+    public abstract String getFpDialogTitle();
 
     public abstract void startNextActivity();
 
@@ -55,7 +64,7 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pass_code);
-
+      tv_timer=findViewById(R.id.tv_waiting);
         clRootview = findViewById(R.id.cl_rootview);
         btnForgotPasscode = findViewById(R.id.btn_forgot_passcode);
         mifosPassCodeView = findViewById(R.id.pv_passcode);
@@ -68,27 +77,69 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
 
         ivLogo.setImageResource(getLogo());
         passcodePreferencesHelper = new PasscodePreferencesHelper(this);
-
         isInitialScreen = getIntent().getBooleanExtra(PassCodeConstants.PASSCODE_INITIAL_LOGIN,
                 false);
-        resetPasscode = getIntent().getBooleanExtra(PassCodeConstants.RESET_PASSCODE, false);
-        isPassCodeVerified = false;
-        strPassCodeEntered = "";
 
-        if (!passcodePreferencesHelper.getPassCode().isEmpty()) {
-            btnSkip.setVisibility(View.GONE);
-            btnSave.setVisibility(View.GONE);
-            tvPasscodeIntro.setVisibility(View.GONE);
-            btnForgotPasscode.setVisibility(View.VISIBLE);
-            //enabling passCodeListener only when user has already setup PassCode
-            mifosPassCodeView.setPassCodeListener(this);
+        //Show Prompt Dialog if device Support Fingerprint Authentication and has fingerprint
+        // registered
+        if (FpAuthSupport.checkAvailabiltyAndIfFingerprintRegistered(this)
+                && passcodePreferencesHelper.getFingerprintEnableDialogState()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this,
+                    R.style.MaterialAlertDialogStyle);
+            builder.setTitle(R.string.fingerprint);
+            builder.setMessage(R.string.FingerprintEnableMessage);
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    passcodePreferencesHelper.setFingerprintEnableDialogState(false);
+                    passcodePreferencesHelper.setAuthType("fpauth");
+                    new FpAuthDialog(MifosPassCodeActivity.this)
+                            .setTitle(getFpDialogTitle())
+                            .setCallback(new FpAuthCallback() {
+                                @Override
+                                public void onFpAuthSuccess() {
+                                    startHomeActivity();
+                                }
+
+                                @Override
+                                public void onCancel() {
+                                    cancelFingerprintAuth();
+                                }
+                            }).show();
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    passcodePreferencesHelper.setFingerprintEnableDialogState(false);
+                    passcodePreferencesHelper.setAuthType("passcode");
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.setCancelable(false);
+            alertDialog.show();
         }
 
-        if (resetPasscode) {
-            btnSkip.setVisibility(View.GONE);
-            btnSave.setVisibility(View.GONE);
-            tvPasscodeIntro.setVisibility(View.VISIBLE);
-            tvPasscodeIntro.setText(R.string.confirm_passcode);
+        if (passcodePreferencesHelper.getAuthType().equalsIgnoreCase("passcode")) {
+            resetPasscode = getIntent().getBooleanExtra(PassCodeConstants.RESET_PASSCODE, false);
+            isPassCodeVerified = false;
+            strPassCodeEntered = "";
+
+            if (!passcodePreferencesHelper.getPassCode().isEmpty()) {
+                btnSkip.setVisibility(View.GONE);
+                btnSave.setVisibility(View.GONE);
+                tvPasscodeIntro.setVisibility(View.GONE);
+                btnForgotPasscode.setVisibility(View.VISIBLE);
+                //enabling passCodeListener only when user has already setup PassCode
+                mifosPassCodeView.setPassCodeListener(this);
+            }
+
+            if (resetPasscode) {
+                btnSkip.setVisibility(View.GONE);
+                btnSave.setVisibility(View.GONE);
+                tvPasscodeIntro.setVisibility(View.VISIBLE);
+                tvPasscodeIntro.setText(R.string.confirm_passcode);
+            }
         }
     }
 
@@ -123,6 +174,7 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
 
     /**
      * Saves the passcode by encrypting it which we got from {@link MifosPassCodeView}
+     *
      * @param view Passcode View
      */
     public void savePassCode(View view) {
@@ -150,6 +202,7 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
 
     /**
      * It is a callback for {@link MifosPassCodeView}, provides with the passcode entered by user
+     *
      * @param passcode Passcode that is entered by user.
      */
     @Override
@@ -163,10 +216,11 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
         if (counter == 3) {
             Toast.makeText(getApplicationContext(), R.string.incorrect_passcode_more_than_three,
                     Toast.LENGTH_SHORT).show();
-            clearTokenPreferences();
-            startLoginActivity();
-            return;
-        }
+                    clearTokenPreferences();
+                    counter = 0;
+                    startLoginActivity();
+                    return;
+                }
 
         if (isPassCodeLengthCorrect()) {
             String passwordEntered = encryptPassCode(mifosPassCodeView.getPasscode());
@@ -175,6 +229,10 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
                     resetPasscode();
                     return;
                 }
+                Toast toast = Toast.makeText(this,R.string.LSuccess , Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.BOTTOM, 0, 0);
+                toast.show();
+
                 startHomeActivity();
             } else {
                 mifosPassCodeView.startAnimation(shakeAnimation);
@@ -191,8 +249,15 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
         startLoginActivity();
     }
 
+    public void cancelFingerprintAuth() {
+        clearTokenPreferences();
+        startLoginActivity();
+        finish();
+    }
+
     /**
      * Checks for internet availability
+     *
      * @return Returns true if connected else returns false
      */
     private boolean isInternetAvailable() {
@@ -264,6 +329,7 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
 
     /**
      * Checks whether passcode entered is of correct length
+     *
      * @return Returns true if passcode lenght is 4 else shows message
      */
     private boolean isPassCodeLengthCorrect() {
@@ -309,5 +375,25 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
         mifosPassCodeView.clearPasscodeField();
         mifosPassCodeView.setPassCodeListener(null);
         passcodePreferencesHelper.clear();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (passcodePreferencesHelper.getAuthType().equalsIgnoreCase("fpauth")) {
+            new FpAuthDialog(MifosPassCodeActivity.this)
+                    .setTitle(getFpDialogTitle())
+                    .setCallback(new FpAuthCallback() {
+                        @Override
+                        public void onFpAuthSuccess() {
+                            startHomeActivity();
+                        }
+
+                        @Override
+                        public void onCancel() {
+                            cancelFingerprintAuth();
+                        }
+                    }).show();
+        }
     }
 }

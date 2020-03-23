@@ -1,208 +1,230 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@android:color/white"
     android:id="@+id/cl_rootview"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:background="@android:color/white">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:padding="@dimen/default_padding">
 
         <LinearLayout
-            android:gravity="center"
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatButton
-                style="@style/Widget.AppCompat.Button.Borderless"
                 android:id="@+id/btn_skip"
-                android:layout_gravity="end"
-                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:onClick="skip"
                 android:text="@string/skip"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/passcode_primary"/>
+                android:textColor="@color/passcode_primary" />
 
-            <ImageView android:id="@+id/iv_logo"
-                       android:layout_height="@dimen/login_height"
-                       android:layout_marginBottom="@dimen/login_padding_top"
-                       android:layout_marginTop="@dimen/login_margin_top"
-                       android:layout_width="wrap_content"/>
+            <ImageView
+                android:id="@+id/iv_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/login_height"
+                android:layout_marginTop="@dimen/login_margin_top"
+                android:layout_marginBottom="@dimen/login_padding_top" />
 
             <TextView
-                android:gravity="center|start"
                 android:id="@+id/tv_passcode"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_margin"
-                android:layout_width="wrap_content"
+                android:gravity="center|start"
                 android:text="@string/passcode_setup"
-                android:textSize="@dimen/text_large"/>
+                android:textSize="@dimen/text_large" />
+            <TextView
+                android:id="@+id/tv_waiting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:gravity="center|start"
+                android:textSize="@dimen/text_large" />
 
             <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_margin"
-                android:layout_width="wrap_content">
+                android:layout_marginTop="@dimen/default_margin">
 
                 <com.mifos.mobile.passcode.MifosPassCodeView
                     android:id="@+id/pv_passcode"
-                    android:layout_gravity="center"
-                    android:layout_height="40dp"
                     android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
                     app:color="@color/passcode_primary"
-                    app:text_size="14sp"/>
+                    app:text_size="14sp" />
 
                 <ImageView
                     android:id="@+id/iv_visibility"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/default_padding"
-                    android:layout_marginStart="@dimen/default_padding"
                     android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/default_padding"
+                    android:layout_marginLeft="@dimen/default_padding"
                     android:onClick="visibilityChange"
-                    app:srcCompat="@drawable/ic_visibility_48px"/>
+                    app:srcCompat="@drawable/ic_visibility_48px" />
 
             </LinearLayout>
 
             <TableLayout
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_margin="@dimen/default_margin"
-                android:layout_weight="1"
-                android:layout_width="wrap_content">
+                android:layout_weight="1">
 
                 <TableRow>
+
                     <androidx.appcompat.widget.AppCompatButton
-                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:id="@+id/btn_one"
-                        android:layout_height="wrap_content"
+                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:onClick="clickedOne"
                         android:text="@string/one"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                        android:textColor="@color/passcode_primary"/>
+                        android:textColor="@color/passcode_primary" />
+
                     <androidx.appcompat.widget.AppCompatButton
-                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:id="@+id/btn_two"
-                        android:layout_height="wrap_content"
+                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:onClick="clickedTwo"
                         android:text="@string/two"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                        android:textColor="@color/passcode_primary"/>
+                        android:textColor="@color/passcode_primary" />
+
                     <androidx.appcompat.widget.AppCompatButton
-                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:id="@+id/btn_three"
-                        android:layout_height="wrap_content"
+                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:onClick="clickedThree"
                         android:text="@string/three"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                        android:textColor="@color/passcode_primary"/>
+                        android:textColor="@color/passcode_primary" />
                 </TableRow>
+
                 <TableRow>
+
                     <androidx.appcompat.widget.AppCompatButton
-                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:id="@+id/btn_four"
-                        android:layout_height="wrap_content"
+                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:onClick="clickedFour"
                         android:text="@string/four"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                        android:textColor="@color/passcode_primary"/>
+                        android:textColor="@color/passcode_primary" />
+
                     <androidx.appcompat.widget.AppCompatButton
-                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:id="@+id/btn_five"
-                        android:layout_height="wrap_content"
+                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:onClick="clickedFive"
                         android:text="@string/five"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                        android:textColor="@color/passcode_primary"/>
+                        android:textColor="@color/passcode_primary" />
+
                     <androidx.appcompat.widget.AppCompatButton
-                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:id="@+id/btn_six"
-                        android:layout_height="wrap_content"
+                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:onClick="clickedSix"
                         android:text="@string/six"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                        android:textColor="@color/passcode_primary"/>
+                        android:textColor="@color/passcode_primary" />
                 </TableRow>
+
                 <TableRow>
+
                     <androidx.appcompat.widget.AppCompatButton
-                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:id="@+id/btn_seven"
-                        android:layout_height="wrap_content"
+                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:onClick="clickedSeven"
                         android:text="@string/seven"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                        android:textColor="@color/passcode_primary"/>
+                        android:textColor="@color/passcode_primary" />
+
                     <androidx.appcompat.widget.AppCompatButton
-                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:id="@+id/btn_eight"
-                        android:layout_height="wrap_content"
+                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:onClick="clickedEight"
                         android:text="@string/eight"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                        android:textColor="@color/passcode_primary"/>
+                        android:textColor="@color/passcode_primary" />
+
                     <androidx.appcompat.widget.AppCompatButton
-                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:id="@+id/btn_nine"
-                        android:layout_height="wrap_content"
+                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:onClick="clickedNine"
                         android:text="@string/nine"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                        android:textColor="@color/passcode_primary"/>
+                        android:textColor="@color/passcode_primary" />
                 </TableRow>
+
                 <TableRow>
-                    <View/>
+
+                    <View />
+
                     <androidx.appcompat.widget.AppCompatButton
-                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:id="@+id/btn_zero"
-                        android:layout_height="wrap_content"
+                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:onClick="clickedZero"
                         android:text="@string/zero"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                        android:textColor="@color/passcode_primary"/>
+                        android:textColor="@color/passcode_primary" />
+
                     <ImageView
-                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:id="@+id/btn_back"
-                        android:layout_height="wrap_content"
+                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:onClick="clickedBackSpace"
-                        app:srcCompat="@drawable/ic_backspace_48px"/>
+                        app:srcCompat="@drawable/ic_backspace_48px" />
                 </TableRow>
             </TableLayout>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_save"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:onClick="savePassCode"
                 android:text="@string/proceed"
                 android:textColor="@android:color/white"
-                app:backgroundTint="@color/passcode_primary"/>
+                app:backgroundTint="@color/passcode_primary" />
 
             <androidx.appcompat.widget.AppCompatButton
-                style="@style/Widget.AppCompat.Button.Borderless"
                 android:id="@+id/btn_forgot_passcode"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_padding"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/default_padding"
                 android:onClick="forgotPassCode"
                 android:text="@string/forgot_passcode"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                 android:textColor="@color/passcode_primary"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
         </LinearLayout>
 
