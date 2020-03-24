@@ -222,6 +222,8 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
                     resetPasscode();
                     return;
                 }
+                Toast.makeText(getApplicationContext(), R.string.Login_successfully,
+                        Toast.LENGTH_SHORT).show();
                 startHomeActivity();
             } else {
                 mifosPassCodeView.startAnimation(shakeAnimation);
