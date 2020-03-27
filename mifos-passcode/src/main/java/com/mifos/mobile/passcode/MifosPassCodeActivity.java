@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -22,9 +23,15 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public abstract class MifosPassCodeActivity extends AppCompatActivity implements MifosPassCodeView.
         PassCodeListener {
 
+
+
+    private static final int WAIT_TIME =  30 * 1000;
     NestedScrollView clRootview;
     AppCompatButton btnForgotPasscode;
     MifosPassCodeView mifosPassCodeView;
@@ -207,25 +214,40 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
             return;
         }
 
-        if (counter == 3) {
-            Toast.makeText(getApplicationContext(), R.string.incorrect_passcode_more_than_three,
+       else if (counter == 5) {
+            Toast.makeText(getApplicationContext(), R.string.incorrect_passcode_more_than_five,
                     Toast.LENGTH_SHORT).show();
-            clearTokenPreferences();
+
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    counter=0;
+                    mifosPassCodeView.setEnabled(false);
+                }
+            }, WAIT_TIME);
+           // clearTokenPreferences();
             startLoginActivity();
+            mifosPassCodeView.setEnabled(true);
             return;
         }
 
-        if (isPassCodeLengthCorrect()) {
+     else  if (isPassCodeLengthCorrect()) {
             String passwordEntered = encryptPassCode(mifosPassCodeView.getPasscode());
             if (passcodePreferencesHelper.getPassCode().equals(passwordEntered)) {
                 if (resetPasscode) {
                     resetPasscode();
                     return;
                 }
+                counter = 0;
+                Toast.makeText(getApplicationContext(), R.string.Login_successfully,
+                        Toast.LENGTH_SHORT).show();
                 startHomeActivity();
             } else {
+
+
                 mifosPassCodeView.startAnimation(shakeAnimation);
-                counter++;
+                counter += 1;
                 mifosPassCodeView.clearPasscodeField();
                 showToaster(clRootview, R.string.incorrect_passcode);
             }
