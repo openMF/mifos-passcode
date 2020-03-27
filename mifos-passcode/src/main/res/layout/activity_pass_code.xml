@@ -34,7 +34,6 @@
                 android:layout_height="@dimen/login_height"
                 android:layout_marginTop="@dimen/login_margin_top"
                 android:layout_marginBottom="@dimen/login_padding_top" />
-
             <TextView
                 android:id="@+id/tv_passcode"
                 android:layout_width="wrap_content"
