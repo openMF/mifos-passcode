@@ -1,50 +1,49 @@
-package com.mifos.mobile.passcode.utils;
+package com.mifos.mobile.passcode.utils
 
-import android.util.Log;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
-import androidx.annotation.IntDef;
+import android.util.Log
+import androidx.annotation.IntDef
+import java.lang.annotation.Retention
+import java.lang.annotation.RetentionPolicy
 
 /**
  * Created by dilpreet on 11/7/17.
  */
+object EncryptionUtil {
+    const val DEFAULT = 1
+    const val MOBILE_BANKING = 2
+    const val ANDROID_CLIENT = 3
+    const val FINERACT_CN = 4
+    private external fun getPassCodeHash(passcode: String): String
 
-public class EncryptionUtil {
+    @JvmStatic
+    fun getDefaultHash(passCode: String): String {
+        return getPassCodeHash(passCode)
+    }
 
-    public static final int DEFAULT = 1;
-    public static final int MOBILE_BANKING = 2;
-    public static final int ANDROID_CLIENT = 3;
-    public static final int FINERACT_CN = 4;
+    @JvmStatic
+    fun getMobileBankingHash(passCode: String): String {
+        return getPassCodeHash(passCode)
+    }
 
-    @IntDef({DEFAULT, MOBILE_BANKING, ANDROID_CLIENT, FINERACT_CN})
+    @JvmStatic
+    fun getAndroidClientHash(passCode: String): String {
+        return getPassCodeHash(passCode)
+    }
+
+    @JvmStatic
+    fun getFineractCNHash(passCode: String): String {
+        return getPassCodeHash(passCode)
+    }
+
+    @IntDef(DEFAULT, MOBILE_BANKING, ANDROID_CLIENT, FINERACT_CN)
     @Retention(RetentionPolicy.SOURCE)
-    public @interface TYPE { };
+    annotation class TYPE
 
-    static {
+    init {
         try {
-            System.loadLibrary("encryption");
-        } catch (UnsatisfiedLinkError e) {
-            Log.e("LoadJniLib", "Error: Could not load native library: " + e.getMessage());
+            System.loadLibrary("encryption")
+        } catch (e: UnsatisfiedLinkError) {
+            Log.e("LoadJniLib", "Error: Could not load native library: " + e.message)
         }
-    }
-
-    private static final native String getPassCodeHash(String passcode);
-
-    public static String getDefaultHash(String passCode) {
-        return getPassCodeHash(passCode);
-    }
-
-    public static String getMobileBankingHash(String passCode) {
-        return getPassCodeHash(passCode);
-    }
-
-    public static String getAndroidClientHash(String passCode) {
-        return getPassCodeHash(passCode);
-    }
-
-    public static String getFineractCNHash(String passCode) {
-        return getPassCodeHash(passCode);
     }
 }

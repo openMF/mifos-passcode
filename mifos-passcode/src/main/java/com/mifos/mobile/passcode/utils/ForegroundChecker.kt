@@ -1,123 +1,106 @@
-package com.mifos.mobile.passcode.utils;
+package com.mifos.mobile.passcode.utils
 
-
-import android.content.Context;
-import android.os.Handler;
+import android.content.Context
+import android.os.Handler
 
 /**
  * Created by dilpreet on 18/7/17.
  */
-
-public class ForegroundChecker {
-
-    public static final long CHECK_DELAY = 500;
-    public static final int MIN_BACKGROUND_THRESHOLD = 60;
-    public static final String TAG = ForegroundChecker.class.getName();
-
-    public interface Listener {
-        public void onBecameForeground();
-    }
-
-    private static ForegroundChecker instance;
-
-    private boolean foreground = false, paused = true;
-    private Handler handler = new Handler();
-    private Listener listener;
-    private Runnable check;
-    private long backgroundTimeStart;
-    private PasscodePreferencesHelper passcodePreferencesHelper;
-
-    /**
-     * Used to initialize {@code instance} of {@link ForegroundChecker}
-     * @param context Application Content
-     * @return Instance of {@link ForegroundChecker}
-     */
-    public static ForegroundChecker init(Context context) {
-        if (instance == null) {
-            instance = new ForegroundChecker(context);
-        }
-        return instance;
-    }
-
-    /**
-     * Provides instance of {@link ForegroundChecker}
-     * @return Instance of {@link ForegroundChecker}
-     */
-    public static ForegroundChecker get() {
-        return instance;
-    }
-
-    /**
-     * Initializes {@link ForegroundChecker}
-     * @param context Application Context
-     */
-    private ForegroundChecker(Context context) {
-        backgroundTimeStart = -1;
-        passcodePreferencesHelper = new PasscodePreferencesHelper(context);
+class ForegroundChecker private constructor(context: Context) {
+    interface Listener {
+        fun onBecameForeground()
     }
 
     /**
      * Returns True if application is in foreground
      * @return State of Application
      */
-    public boolean isForeground() {
-        return foreground;
-    }
+    var isForeground = false
+        private set
+    private var paused = true
+    private val handler = Handler()
+    private var listener: Listener? = null
+    private var check: Runnable? = null
+    private var backgroundTimeStart: Long
+    private val passcodePreferencesHelper: PasscodePreferencesHelper
 
     /**
      * Returns True if application is in background
      * @return State of Application
      */
-    public boolean isBackground() {
-        return !foreground;
-    }
+    val isBackground: Boolean
+        get() = !isForeground
 
-    public void addListener(Listener listener) {
-        this.listener = listener;
+    fun addListener(listener: Listener?) {
+        this.listener = listener
     }
 
     /**
-     * It calls {@code onBecameForeground()} if {@code secondsInBackground} >=
-     * {@code MIN_BACKGROUND_THRESHOLD}
+     * It calls `onBecameForeground()` if `secondsInBackground` >=
+     * `MIN_BACKGROUND_THRESHOLD`
      */
-    public void onActivityResumed() {
-        paused = false;
-        boolean wasBackground = !foreground;
-        foreground = true;
-
-        if (check != null)
-            handler.removeCallbacks(check);
-
+    fun onActivityResumed() {
+        paused = false
+        val wasBackground = !isForeground
+        isForeground = true
+        if (check != null) handler.removeCallbacks(check!!)
         if (wasBackground) {
-
-            int secondsInBackground = (int) ((System.currentTimeMillis() - backgroundTimeStart) /
-                    1000);
-            if (backgroundTimeStart != -1 && secondsInBackground >= MIN_BACKGROUND_THRESHOLD &&
-                    listener != null && !passcodePreferencesHelper.getPassCode().isEmpty()) {
-                listener.onBecameForeground();
+            val secondsInBackground = ((System.currentTimeMillis() - backgroundTimeStart) /
+                    1000).toInt()
+            if (backgroundTimeStart != -1L && secondsInBackground >= MIN_BACKGROUND_THRESHOLD && listener != null && passcodePreferencesHelper.passCode!!.isNotEmpty()) {
+                listener!!.onBecameForeground()
             }
-
         }
     }
 
     /**
-     * It executes a Handler after {@code CHECK_DELAY} and then sets {@code foreground} to false
+     * It executes a Handler after `CHECK_DELAY` and then sets `foreground` to false
      */
-    public void onActivityPaused() {
-        paused = true;
-
-        if (check != null)
-            handler.removeCallbacks(check);
-
-        handler.postDelayed(check = new Runnable() {
-            @Override
-            public void run() {
-                if (foreground && paused) {
-                    foreground = false;
-                    backgroundTimeStart = System.currentTimeMillis();
-
-                }
+    fun onActivityPaused() {
+        paused = true
+        if (check != null) handler.removeCallbacks(check!!)
+        handler.postDelayed(Runnable {
+            if (isForeground && paused) {
+                isForeground = false
+                backgroundTimeStart = System.currentTimeMillis()
             }
-        }, CHECK_DELAY);
+        }.also { check = it }, CHECK_DELAY)
+    }
+
+    companion object {
+        const val CHECK_DELAY: Long = 500
+        const val MIN_BACKGROUND_THRESHOLD = 60
+        val TAG = ForegroundChecker::class.java.name
+        private var instance: ForegroundChecker? = null
+
+        /**
+         * Used to initialize `instance` of [ForegroundChecker]
+         * @param context Application Content
+         * @return Instance of [ForegroundChecker]
+         */
+        @JvmStatic
+        fun init(context: Context): ForegroundChecker? {
+            if (instance == null) {
+                instance = ForegroundChecker(context)
+            }
+            return instance
+        }
+
+        /**
+         * Provides instance of [ForegroundChecker]
+         * @return Instance of [ForegroundChecker]
+         */
+        fun get(): ForegroundChecker? {
+            return instance
+        }
+    }
+
+    /**
+     * Initializes [ForegroundChecker]
+     * @param context Application Context
+     */
+    init {
+        backgroundTimeStart = -1
+        passcodePreferencesHelper = PasscodePreferencesHelper(context)
     }
 }

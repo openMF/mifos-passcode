@@ -1,51 +1,39 @@
-package com.mifos.mobile.passcode.utils;
+package com.mifos.mobile.passcode.utils
 
-
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import android.content.Context
+import android.content.SharedPreferences
+import android.preference.PreferenceManager
 
 /**
  * Created by dilpreet on 19/01/18.
  */
-
-public class PasscodePreferencesHelper {
-
-    private SharedPreferences sharedPreferences;
-    private final String TOKEN = "preferences_mifos_passcode_string";
-    private final String FINGERPRINTENABLER = "fingerprint_enable_dialog";
-    private final String AUTHTYPE = "auth_type";
-
-    public PasscodePreferencesHelper(Context context) {
-        this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+class PasscodePreferencesHelper(context: Context?) {
+    private val sharedPreferences: SharedPreferences
+    private val TOKEN = "preferences_mifos_passcode_string"
+    private val FINGERPRINTENABLER = "fingerprint_enable_dialog"
+    private val AUTHTYPE = "auth_type"
+    fun savePassCode(token: String?) {
+        sharedPreferences.edit().putString(TOKEN, token).apply()
     }
 
-    public void savePassCode(String token) {
-        sharedPreferences.edit().putString(TOKEN, token).apply();
+    val passCode: String?
+        get() = sharedPreferences.getString(TOKEN, "")
+    var fingerprintEnableDialogState: Boolean
+        get() = sharedPreferences.getBoolean(FINGERPRINTENABLER, true)
+        set(show) {
+            sharedPreferences.edit().putBoolean(FINGERPRINTENABLER, show).apply()
+        }
+    var authType: String?
+        get() = sharedPreferences.getString(AUTHTYPE, "")
+        set(authType) {
+            sharedPreferences.edit().putString(AUTHTYPE, authType).apply()
+        }
+
+    fun clear() {
+        sharedPreferences.edit().clear().apply()
     }
 
-    public String getPassCode() {
-        return sharedPreferences.getString(TOKEN, "");
+    init {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     }
-
-    public void setFingerprintEnableDialogState(boolean show) {
-        sharedPreferences.edit().putBoolean(FINGERPRINTENABLER, show).apply();
-    }
-
-    public Boolean getFingerprintEnableDialogState() {
-        return sharedPreferences.getBoolean(FINGERPRINTENABLER, true);
-    }
-
-    public void setAuthType(String authType) {
-        sharedPreferences.edit().putString(AUTHTYPE, authType).apply();
-    }
-
-    public String getAuthType() {
-        return sharedPreferences.getString(AUTHTYPE, "");
-    }
-
-    public void clear() {
-        sharedPreferences.edit().clear().apply();
-    }
-
 }

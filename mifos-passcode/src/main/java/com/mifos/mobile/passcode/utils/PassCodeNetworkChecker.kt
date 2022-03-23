@@ -1,26 +1,23 @@
-package com.mifos.mobile.passcode.utils;
+package com.mifos.mobile.passcode.utils
 
-
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.telephony.TelephonyManager;
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
+import android.telephony.TelephonyManager
 
 /**
  * Created by rishabhkhanna on 07/03/17.
  */
-
-public class PassCodeNetworkChecker {
+object PassCodeNetworkChecker {
     /**
      * Get the network info
      *
      * @param context Context
      * @return NetworkInfo
      */
-    public static NetworkInfo getNetworkInfo(Context context) {
-        ConnectivityManager cm = (ConnectivityManager)
-                context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo();
+    fun getNetworkInfo(context: Context): NetworkInfo? {
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return cm.activeNetworkInfo
     }
 
     /**
@@ -29,9 +26,9 @@ public class PassCodeNetworkChecker {
      * @param context Context
      * @return state of network
      */
-    public static boolean isConnected(Context context) {
-        NetworkInfo info = PassCodeNetworkChecker.getNetworkInfo(context);
-        return (info != null && info.isConnected());
+    fun isConnected(context: Context): Boolean {
+        val info = getNetworkInfo(context)
+        return info != null && info.isConnected
     }
 
     /**
@@ -40,10 +37,9 @@ public class PassCodeNetworkChecker {
      * @param context Context
      * @return state if wifi connection
      */
-    public static boolean isConnectedWifi(Context context) {
-        NetworkInfo info = PassCodeNetworkChecker.getNetworkInfo(context);
-        return (info != null && info.isConnected() &&
-                info.getType() == ConnectivityManager.TYPE_WIFI);
+    fun isConnectedWifi(context: Context): Boolean {
+        val info = getNetworkInfo(context)
+        return info != null && info.isConnected && info.type == ConnectivityManager.TYPE_WIFI
     }
 
     /**
@@ -52,10 +48,9 @@ public class PassCodeNetworkChecker {
      * @param context Context
      * @return mobile connected to network or not
      */
-    public static boolean isConnectedMobile(Context context) {
-        NetworkInfo info = PassCodeNetworkChecker.getNetworkInfo(context);
-        return (info != null && info.isConnected() &&
-                info.getType() == ConnectivityManager.TYPE_MOBILE);
+    fun isConnectedMobile(context: Context): Boolean {
+        val info = getNetworkInfo(context)
+        return info != null && info.isConnected && info.type == ConnectivityManager.TYPE_MOBILE
     }
 
     /**
@@ -64,10 +59,10 @@ public class PassCodeNetworkChecker {
      * @param context Context
      * @return connection is fast or not
      */
-    public static boolean isConnectedFast(Context context) {
-        NetworkInfo info = PassCodeNetworkChecker.getNetworkInfo(context);
-        return (info != null && info.isConnected() &&
-                PassCodeNetworkChecker.isConnectionFast(info.getType(), info.getSubtype()));
+    fun isConnectedFast(context: Context): Boolean {
+        val info = getNetworkInfo(context)
+        return info != null && info.isConnected &&
+                isConnectionFast(info.type, info.subtype)
     }
 
     /**
@@ -77,53 +72,31 @@ public class PassCodeNetworkChecker {
      * @param subType SubType of Connection
      * @return connection is fast or not
      */
-    public static boolean isConnectionFast(int type, int subType) {
-        if (type == ConnectivityManager.TYPE_WIFI) {
-            return true;
+    private fun isConnectionFast(type: Int, subType: Int): Boolean {
+        return if (type == ConnectivityManager.TYPE_WIFI) {
+            true
         } else if (type == ConnectivityManager.TYPE_MOBILE) {
-            switch (subType) {
-                case TelephonyManager.NETWORK_TYPE_1xRTT:
-                    return false; // ~ 50-100 kbps
-                case TelephonyManager.NETWORK_TYPE_CDMA:
-                    return false; // ~ 14-64 kbps
-                case TelephonyManager.NETWORK_TYPE_EDGE:
-                    return false; // ~ 50-100 kbps
-                case TelephonyManager.NETWORK_TYPE_EVDO_0:
-                    return true; // ~ 400-1000 kbps
-                case TelephonyManager.NETWORK_TYPE_EVDO_A:
-                    return true; // ~ 600-1400 kbps
-                case TelephonyManager.NETWORK_TYPE_GPRS:
-                    return false; // ~ 100 kbps
-                case TelephonyManager.NETWORK_TYPE_HSDPA:
-                    return true; // ~ 2-14 Mbps
-                case TelephonyManager.NETWORK_TYPE_HSPA:
-                    return true; // ~ 700-1700 kbps
-                case TelephonyManager.NETWORK_TYPE_HSUPA:
-                    return true; // ~ 1-23 Mbps
-                case TelephonyManager.NETWORK_TYPE_UMTS:
-                    return true; // ~ 400-7000 kbps
-
-            /* Above API level 7, make sure to set android:targetSdkVersion
-             * to appropriate level to use these*/
-
-                case TelephonyManager.NETWORK_TYPE_EHRPD: // API level 11
-                    return true; // ~ 1-2 Mbps
-                case TelephonyManager.NETWORK_TYPE_EVDO_B: // API level 9
-                    return true; // ~ 5 Mbps
-                case TelephonyManager.NETWORK_TYPE_HSPAP: // API level 13
-                    return true; // ~ 10-20 Mbps
-                case TelephonyManager.NETWORK_TYPE_IDEN: // API level 8
-                    return false; // ~25 kbps
-                case TelephonyManager.NETWORK_TYPE_LTE: // API level 11
-                    return true; // ~ 10+ Mbps
-                // Unknown
-                case TelephonyManager.NETWORK_TYPE_UNKNOWN:
-                default:
-                    return false;
+            when (subType) {
+                TelephonyManager.NETWORK_TYPE_1xRTT -> false // ~ 50-100 kbps
+                TelephonyManager.NETWORK_TYPE_CDMA -> false // ~ 14-64 kbps
+                TelephonyManager.NETWORK_TYPE_EDGE -> false // ~ 50-100 kbps
+                TelephonyManager.NETWORK_TYPE_EVDO_0 -> true // ~ 400-1000 kbps
+                TelephonyManager.NETWORK_TYPE_EVDO_A -> true // ~ 600-1400 kbps
+                TelephonyManager.NETWORK_TYPE_GPRS -> false // ~ 100 kbps
+                TelephonyManager.NETWORK_TYPE_HSDPA -> true // ~ 2-14 Mbps
+                TelephonyManager.NETWORK_TYPE_HSPA -> true // ~ 700-1700 kbps
+                TelephonyManager.NETWORK_TYPE_HSUPA -> true // ~ 1-23 Mbps
+                TelephonyManager.NETWORK_TYPE_UMTS -> true // ~ 400-7000 kbps
+                TelephonyManager.NETWORK_TYPE_EHRPD -> true // ~ 1-2 Mbps
+                TelephonyManager.NETWORK_TYPE_EVDO_B -> true // ~ 5 Mbps
+                TelephonyManager.NETWORK_TYPE_HSPAP -> true // ~ 10-20 Mbps
+                TelephonyManager.NETWORK_TYPE_IDEN -> false // ~25 kbps
+                TelephonyManager.NETWORK_TYPE_LTE -> true // ~ 10+ Mbps
+                TelephonyManager.NETWORK_TYPE_UNKNOWN -> false
+                else -> false
             }
         } else {
-            return false;
+            false
         }
     }
-
 }
