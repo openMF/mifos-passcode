@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileOptions {
@@ -15,11 +15,11 @@ android {
             keyPassword "mifos1234"
         }
     }
-    compileSdkVersion 28
+    compileSdk 34
     defaultConfig {
         applicationId "com.mifos.passcode"
-        minSdkVersion 15
-        targetSdkVersion 28
+        minSdk 15
+        targetSdk 34
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -42,8 +42,12 @@ dependencies {
     implementation project(':mifos-passcode')
     //implementation 'com.mifos.mobile:mifos-passcode:1.0.0'
     implementation "androidx.core:core-ktx:+"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
 repositories {
     mavenCentral()
+}
+
+configurations.implementation {
+    exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
 }

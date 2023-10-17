@@ -9,7 +9,8 @@
         android:supportsRtl="true"
         android:name=".MifosApplication"
         android:theme="@style/AppTheme" >
-        <activity android:name=".PassCodeActivity" >
+        <activity android:name=".PassCodeActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
