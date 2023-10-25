@@ -35,10 +35,10 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha03'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.2-alpha02'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha02'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test:runner:1.6.0-alpha04'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.0-alpha01'
     implementation project(':mifos-passcode')
     //implementation 'com.mifos.mobile:mifos-passcode:1.0.0'
     implementation "androidx.core:core-ktx:+"
