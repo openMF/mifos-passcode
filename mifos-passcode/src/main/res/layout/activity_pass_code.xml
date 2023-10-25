@@ -64,7 +64,7 @@
                     android:layout_marginStart="@dimen/default_padding"
                     android:layout_marginLeft="@dimen/default_padding"
                     android:onClick="visibilityChange"
-                    app:srcCompat="@drawable/ic_visibility_48px" />
+                    app:srcCompat="@drawable/ic_visibility_on_48px" />
 
             </LinearLayout>
 

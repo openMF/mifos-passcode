@@ -19,7 +19,6 @@ import com.mifos.mobile.passcode.utils.PasscodePreferencesHelper;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 
 public abstract class MifosPassCodeActivity extends AppCompatActivity implements MifosPassCodeView.
@@ -309,11 +308,9 @@ public abstract class MifosPassCodeActivity extends AppCompatActivity implements
     public void visibilityChange(View view) {
         mifosPassCodeView.revertPassCodeVisibility();
         if (!mifosPassCodeView.passcodeVisible()) {
-            ivVisibility.setColorFilter(ContextCompat.getColor(MifosPassCodeActivity.this,
-                    R.color.light_grey));
+            ivVisibility.setImageResource(R.drawable.ic_visibility_on_48px);
         } else {
-            ivVisibility.setColorFilter(ContextCompat.getColor(MifosPassCodeActivity.this,
-                    R.color.gray_dark));
+            ivVisibility.setImageResource(R.drawable.ic_visibility_off_24dp);
         }
     }
 
