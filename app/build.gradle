@@ -18,7 +18,7 @@ android {
     compileSdk 34
     defaultConfig {
         applicationId "com.mifos.passcode"
-        minSdk 15
+        minSdk 19
         targetSdk 34
         versionCode 1
         versionName "1.0"
