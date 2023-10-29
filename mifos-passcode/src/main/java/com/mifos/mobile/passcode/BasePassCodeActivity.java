@@ -2,14 +2,14 @@ package com.mifos.mobile.passcode;
 
 import com.mifos.mobile.passcode.utils.ForegroundChecker;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.activity.ComponentActivity;
 
 
 /**
  * Created by dilpreet on 19/01/18.
  */
 
-public abstract class BasePassCodeActivity extends AppCompatActivity implements
+public abstract class BasePassCodeActivity extends ComponentActivity implements
         ForegroundChecker.Listener {
 
     @Override
