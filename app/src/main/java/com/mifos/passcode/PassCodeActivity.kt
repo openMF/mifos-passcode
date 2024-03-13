@@ -1,35 +1,48 @@
 package com.mifos.passcode
 
-import android.view.View
+import android.content.Intent
+import android.os.Bundle
 import android.widget.Toast
-import com.mifos.mobile.passcode.MifosPassCodeActivity
-import com.mifos.mobile.passcode.utils.EncryptionUtil
+import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
+import com.assignment.compose.PasscodeViewModel
+import com.assignment.compose.component.PasscodeScreen
+import com.assignment.compose.theme.MifosPasscodeTheme
+import com.assignment.compose.utility.PasscodeListener
+import com.assignment.compose.utility.PreferenceManager
 
 /**
  * Created by dilpreet on 19/01/18.
  */
-class PassCodeActivity : MifosPassCodeActivity() {
+class PassCodeActivity : AppCompatActivity(), PasscodeListener {
 
-    override val logo: Int
-        get() =//logo to be shown on the top
-            R.drawable.mifos_logo
+    private lateinit var passcodeViewModel: PasscodeViewModel
+    private lateinit var preferenceManager: PreferenceManager
 
-    override fun startNextActivity() {
-        //start intent for the next activity
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        preferenceManager = PreferenceManager(this)
+        passcodeViewModel = PasscodeViewModel(preferenceManager)
+
+        setContent {
+            MifosPasscodeTheme {
+                PasscodeScreen(passcodeViewModel,this,preferenceManager)
+            }
+        }
     }
 
-    override fun startLoginActivity() {
-        //start intent for the login activity
+    override fun onPassCodeReceive(passcode: String) {
+        if (preferenceManager.getSavedPasscode() == passcode) {
+            startActivity(Intent(this,LoginActivity::class.java))
+            Toast.makeText(this, "New Screen",Toast.LENGTH_SHORT).show()
+        }
     }
 
-    override fun showToaster(view: View?, msg: Int) {
-        //show prompts in toast or using snackbar
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    override fun onPasscodeReject() {
+
     }
 
-    override val encryptionType: Int = EncryptionUtil.DEFAULT
+    override fun onPasscodeForgot() {
 
-    override val fpDialogTitle: String
-        get() =//Title to be shown for Fingerprint Dialog
-            getString(R.string.fingerprint_dialog_title)
+    }
 }
