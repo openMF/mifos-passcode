@@ -13,9 +13,20 @@ val Typography = Typography(
     )
 )
 
-
 val PasscodeKeyButtonStyle = TextStyle(
     fontFamily = LatoFonts,
     fontWeight = FontWeight.Bold,
     fontSize = 24.sp
+)
+
+val skipButtonStyle = TextStyle(
+    color = keyTint,
+    fontSize = 20.sp,
+    fontFamily = LatoFonts
+)
+
+val forgotButtonStyle = TextStyle(
+    color = keyTint,
+    fontSize = 14.sp,
+    fontFamily = LatoFonts
 )
