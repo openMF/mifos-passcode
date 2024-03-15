@@ -1,4 +1,4 @@
-package com.assignment.compose.component
+package com.mifos.compose.component
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme

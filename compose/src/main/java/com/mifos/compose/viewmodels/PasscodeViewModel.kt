@@ -1,9 +1,9 @@
-package com.assignment.compose.viewmodels
+package com.mifos.compose.viewmodels
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.assignment.compose.utility.PreferenceManager
+import com.mifos.compose.utility.PreferenceManager
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow

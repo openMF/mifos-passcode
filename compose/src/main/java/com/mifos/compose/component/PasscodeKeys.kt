@@ -1,4 +1,4 @@
-package com.assignment.compose.component
+package com.mifos.compose.component
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
@@ -28,11 +28,11 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.assignment.compose.viewmodels.PasscodeViewModel
-import com.assignment.compose.R
-import com.assignment.compose.theme.PasscodeKeyButtonStyle
-import com.assignment.compose.theme.keyTint
-import com.assignment.compose.utility.PreferenceManager
+import com.mifos.compose.viewmodels.PasscodeViewModel
+import com.mifos.compose.R
+import com.mifos.compose.theme.PasscodeKeyButtonStyle
+import com.mifos.compose.theme.keyTint
+import com.mifos.compose.utility.PreferenceManager
 
 @Composable
 fun PasscodeKeys(

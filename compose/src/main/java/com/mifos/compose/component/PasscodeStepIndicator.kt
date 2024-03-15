@@ -1,4 +1,4 @@
-package com.assignment.compose.component
+package com.mifos.compose.component
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
@@ -11,8 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.assignment.compose.viewmodels.PasscodeViewModel
-import com.assignment.compose.theme.keyTint
+import com.mifos.compose.viewmodels.PasscodeViewModel
+import com.mifos.compose.theme.keyTint
 
 @Composable
 fun PasscodeStepIndicator(
