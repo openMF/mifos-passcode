@@ -1,4 +1,4 @@
-package com.assignment.compose.component
+package com.mifos.compose.component
 
 import android.content.Context
 import android.os.Build
@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -38,13 +37,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import com.assignment.compose.viewmodels.PasscodeViewModel
-import com.assignment.compose.theme.forgotButtonStyle
-import com.assignment.compose.theme.keyTint
-import com.assignment.compose.theme.skipButtonStyle
-import com.assignment.compose.utility.InterfacePreviewProvider
-import com.assignment.compose.utility.PasscodeListener
-import com.assignment.compose.utility.PreferenceManager
+import com.mifos.compose.viewmodels.PasscodeViewModel
+import com.mifos.compose.theme.forgotButtonStyle
+import com.mifos.compose.theme.keyTint
+import com.mifos.compose.theme.skipButtonStyle
+import com.mifos.compose.utility.InterfacePreviewProvider
+import com.mifos.compose.utility.PasscodeListener
+import com.mifos.compose.utility.PreferenceManager
 
 const val VIBRATE_FEEDBACK_DURATION = 300L
 
@@ -184,11 +183,7 @@ private fun PasscodeView(
             repeat(PasscodeViewModel.PASSCODE_LENGTH) { dot ->
                 val isFilledDot = dot + 1 <= filledDots
                 val dotColor = animateColorAsState(
-                    if (isFilledDot) {
-                        keyTint
-                    } else {
-                        MaterialTheme.colorScheme.secondary
-                    }, label = ""
+                    if (isFilledDot) keyTint else Color.DarkGray, label = ""
                 )
 
                 Row(

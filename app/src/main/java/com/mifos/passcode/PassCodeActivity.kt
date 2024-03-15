@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import com.assignment.compose.viewmodels.PasscodeViewModel
-import com.assignment.compose.component.PasscodeScreen
-import com.assignment.compose.theme.MifosPasscodeTheme
-import com.assignment.compose.utility.PasscodeListener
-import com.assignment.compose.utility.PreferenceManager
+import com.mifos.compose.viewmodels.PasscodeViewModel
+import com.mifos.compose.component.PasscodeScreen
+import com.mifos.compose.theme.MifosPasscodeTheme
+import com.mifos.compose.utility.PasscodeListener
+import com.mifos.compose.utility.PreferenceManager
 
 /**
  * Created by dilpreet on 19/01/18.

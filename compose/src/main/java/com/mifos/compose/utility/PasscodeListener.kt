@@ -1,4 +1,4 @@
-package com.assignment.compose.utility
+package com.mifos.compose.utility
 
 interface PasscodeListener {
     fun onPassCodeReceive(passcode: String)

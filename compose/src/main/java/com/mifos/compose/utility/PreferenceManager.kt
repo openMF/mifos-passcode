@@ -1,8 +1,8 @@
-package com.assignment.compose.utility
+package com.mifos.compose.utility
 
 import android.content.Context
 import androidx.compose.runtime.mutableStateOf
-import com.assignment.compose.R
+import com.mifos.compose.R
 
 class PreferenceManager(context: Context) {
     private val sharedPreference = context.getSharedPreferences(

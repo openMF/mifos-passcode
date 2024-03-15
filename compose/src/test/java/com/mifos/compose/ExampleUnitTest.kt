@@ -1,4 +1,4 @@
-package com.assignment.compose
+package com.mifos.compose
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.assignment.compose.utility
+package com.mifos.compose.utility
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 
