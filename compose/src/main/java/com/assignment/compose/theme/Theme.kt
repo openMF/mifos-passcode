@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Blue
 
-
 private val DarkColorPalette = darkColorScheme(
     primary = Color.Cyan,
     onPrimary = Color.Cyan,

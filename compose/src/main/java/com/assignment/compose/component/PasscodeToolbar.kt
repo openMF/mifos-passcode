@@ -14,7 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.assignment.compose.PasscodeViewModel
+import com.assignment.compose.viewmodels.PasscodeViewModel
 import com.assignment.compose.R
 
 @Composable

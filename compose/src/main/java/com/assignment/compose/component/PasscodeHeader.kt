@@ -22,7 +22,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.assignment.compose.PasscodeViewModel
+import com.assignment.compose.viewmodels.PasscodeViewModel
 import com.assignment.compose.R
 
 @Composable
