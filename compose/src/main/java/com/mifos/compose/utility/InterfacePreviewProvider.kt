@@ -11,5 +11,7 @@ class InterfacePreviewProvider : PreviewParameterProvider<PasscodeListener> {
             override fun onPassCodeReceive(passcode: String) {}
 
             override fun onPasscodeForgot() {}
+
+            override fun onPasscodeSkip() {}
         })
 }

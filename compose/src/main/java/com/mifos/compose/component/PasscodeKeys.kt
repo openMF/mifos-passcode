@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import com.mifos.compose.viewmodels.PasscodeViewModel
 import com.mifos.compose.R
 import com.mifos.compose.theme.PasscodeKeyButtonStyle
-import com.mifos.compose.theme.keyTint
+import com.mifos.compose.theme.blueTint
 import com.mifos.compose.utility.PreferenceManager
 
 @Composable
@@ -144,13 +144,13 @@ fun PasscodeKey(
             if (keyIcon == null) {
                 Text(
                     text = keyTitle,
-                    style = PasscodeKeyButtonStyle.copy(color = keyTint)
+                    style = PasscodeKeyButtonStyle.copy(color = blueTint)
                 )
             } else {
                 Icon(
                     imageVector = Icons.Default.Backspace,
                     contentDescription = keyIconContentDescription,
-                    tint = keyTint
+                    tint = blueTint
                 )
             }
         }

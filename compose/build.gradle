@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.assignment.compose'
+    namespace 'com.mifos.compose'
     compileSdk 34
 
     defaultConfig {

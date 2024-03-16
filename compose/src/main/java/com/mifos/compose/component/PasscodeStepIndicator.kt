@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mifos.compose.viewmodels.PasscodeViewModel
-import com.mifos.compose.theme.keyTint
+import com.mifos.compose.theme.blueTint
 
 @Composable
 fun PasscodeStepIndicator(
@@ -31,7 +31,7 @@ fun PasscodeStepIndicator(
             val isActiveStep = step <= activeStep.index
             val stepColor = animateColorAsState(
                 if (isActiveStep) {
-                    keyTint
+                    blueTint
                 } else {
                     MaterialTheme.colorScheme.secondary
                 }, label = ""

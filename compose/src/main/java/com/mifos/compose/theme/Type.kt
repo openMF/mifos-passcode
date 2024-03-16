@@ -20,13 +20,13 @@ val PasscodeKeyButtonStyle = TextStyle(
 )
 
 val skipButtonStyle = TextStyle(
-    color = keyTint,
+    color = blueTint,
     fontSize = 20.sp,
     fontFamily = LatoFonts
 )
 
 val forgotButtonStyle = TextStyle(
-    color = keyTint,
+    color = blueTint,
     fontSize = 14.sp,
     fontFamily = LatoFonts
 )

@@ -19,7 +19,6 @@ class PasscodeViewModel(private val preferenceManager: PreferenceManager) : View
 
     private val _onPasscodeConfirmed = MutableSharedFlow<String>()
     private val _onPasscodeRejected = MutableSharedFlow<Unit>()
-    private val _onPassCodeReceive = MutableSharedFlow<String>()
 
     private val _activeStep = MutableStateFlow(Step.Create)
     private val _filledDots = MutableStateFlow(0)
@@ -29,18 +28,17 @@ class PasscodeViewModel(private val preferenceManager: PreferenceManager) : View
 
     val onPasscodeConfirmed = _onPasscodeConfirmed.asSharedFlow()
     val onPasscodeRejected = _onPasscodeRejected.asSharedFlow()
-    val onPassCodeReceive = _onPassCodeReceive.asSharedFlow()
-
 
     val activeStep = _activeStep.asStateFlow()
     val filledDots = _filledDots.asStateFlow()
 
+    private val _passcodeVisible = MutableStateFlow(false)
+    val passcodeVisible = _passcodeVisible.asStateFlow()
+
+    private val _currentPasscodeInput = MutableStateFlow("")
+    val currentPasscodeInput = _currentPasscodeInput.asStateFlow()
+
     private var _isPasscodeAlreadySet = mutableStateOf(preferenceManager.hasPasscode)
-    var isPasscodeAlreadySet: Boolean
-        get() = _isPasscodeAlreadySet.value
-        set(value) {
-            _isPasscodeAlreadySet.value = value
-        }
 
     init {
         resetData()
@@ -62,8 +60,8 @@ class PasscodeViewModel(private val preferenceManager: PreferenceManager) : View
         _onPasscodeRejected.emit(Unit)
     }
 
-    private fun emitOnPasscodeReceive(receivedPasscode: String) = viewModelScope.launch {
-        _onPassCodeReceive.emit(receivedPasscode)
+    fun togglePasscodeVisibility() {
+        _passcodeVisible.value = !_passcodeVisible.value
     }
 
     private fun resetData() {
@@ -79,8 +77,10 @@ class PasscodeViewModel(private val preferenceManager: PreferenceManager) : View
             return
         }
 
-        val currentPasscode = if (_activeStep.value == Step.Create) createPasscode else confirmPasscode
+        val currentPasscode =
+            if (_activeStep.value == Step.Create) createPasscode else confirmPasscode
         currentPasscode.append(key)
+        _currentPasscodeInput.value = currentPasscode.toString()
         emitFilledDots(currentPasscode.length)
 
         if (_filledDots.value == PASSCODE_LENGTH) {
@@ -92,9 +92,11 @@ class PasscodeViewModel(private val preferenceManager: PreferenceManager) : View
                     emitOnPasscodeRejected()
                     // logic for retires can be written here
                 }
+                _currentPasscodeInput.value = ""
             } else if (_activeStep.value == Step.Create) {
                 emitActiveStep(Step.Confirm)
                 emitFilledDots(0)
+                _currentPasscodeInput.value = ""
             } else {
                 if (createPasscode.toString() == confirmPasscode.toString()) {
                     emitOnPasscodeConfirmed(confirmPasscode.toString())
@@ -105,25 +107,22 @@ class PasscodeViewModel(private val preferenceManager: PreferenceManager) : View
                     emitOnPasscodeRejected()
                     resetData()
                 }
+                _currentPasscodeInput.value = ""
             }
         }
     }
 
     fun deleteKey() {
-        _filledDots.tryEmit(
-            if (_activeStep.value == Step.Create) {
-                if (createPasscode.isNotEmpty()) {
-                    createPasscode.deleteAt(createPasscode.length - 1)
-                }
-                createPasscode.length
-            } else {
-                if (confirmPasscode.isNotEmpty()) {
-                    confirmPasscode.deleteAt(confirmPasscode.length - 1)
-                }
-                confirmPasscode.length
-            }
-        )
+        val currentPasscode =
+            if (_activeStep.value == Step.Create) createPasscode else confirmPasscode
+
+        if (currentPasscode.isNotEmpty()) {
+            currentPasscode.deleteAt(currentPasscode.length - 1)
+            _currentPasscodeInput.value = currentPasscode.toString()
+            emitFilledDots(currentPasscode.length)
+        }
     }
+
 
     fun deleteAllKeys() {
         if (_activeStep.value == Step.Create) {
@@ -131,11 +130,14 @@ class PasscodeViewModel(private val preferenceManager: PreferenceManager) : View
         } else {
             confirmPasscode.clear()
         }
-
+        _currentPasscodeInput.value = ""
         emitFilledDots(0)
     }
 
-    fun restart() = resetData()
+    fun restart() {
+        resetData()
+        _passcodeVisible.value = false
+    }
 
     enum class Step(var index: Int) {
         Create(0),
@@ -143,7 +145,6 @@ class PasscodeViewModel(private val preferenceManager: PreferenceManager) : View
     }
 
     companion object {
-
         const val STEPS_COUNT = 2
         const val PASSCODE_LENGTH = 4
     }
