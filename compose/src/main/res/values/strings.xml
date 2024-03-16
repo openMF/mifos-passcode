@@ -16,5 +16,8 @@
     <string name="drag_your_pattern">Drag your Pattern</string>
     <string name="exit">Exit</string>
     <string name="cancel">Cancel</string>
+    <string name="skip">Skip</string>
+    <string name="forgot_passcode_login_manually">Forgot Passcode, Login Manually</string>
+    <string name="try_again">Try again</string>
 
 </resources>

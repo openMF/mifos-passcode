@@ -1,16 +1,11 @@
 package com.mifos.compose.component
 
-import android.content.Context
-import android.os.Build
-import android.os.CombinedVibration
-import android.os.VibrationEffect
-import android.os.Vibrator
-import android.os.VibratorManager
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.keyframes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,7 +16,11 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -34,18 +33,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import com.mifos.compose.viewmodels.PasscodeViewModel
+import com.mifos.compose.R
+import com.mifos.compose.theme.blueTint
 import com.mifos.compose.theme.forgotButtonStyle
-import com.mifos.compose.theme.keyTint
 import com.mifos.compose.theme.skipButtonStyle
 import com.mifos.compose.utility.InterfacePreviewProvider
 import com.mifos.compose.utility.PasscodeListener
 import com.mifos.compose.utility.PreferenceManager
-
-const val VIBRATE_FEEDBACK_DURATION = 300L
+import com.mifos.compose.utility.VibrationFeedback.vibrateFeedback
+import com.mifos.compose.viewmodels.PasscodeViewModel
 
 /**
  * @author pratyush
@@ -56,19 +56,14 @@ const val VIBRATE_FEEDBACK_DURATION = 300L
 fun PasscodeScreen(
     viewModel: PasscodeViewModel,
     passcodeListener: PasscodeListener,
-    preferenceManager: PreferenceManager,
+    preferenceManager: PreferenceManager
 ) {
 
     val activeStep by viewModel.activeStep.collectAsState()
-    val snackbarHostState = remember { SnackbarHostState() }
-    viewModel.isPasscodeAlreadySet = preferenceManager.hasPasscode
 
     LaunchedEffect(key1 = true) {
         viewModel.onPasscodeConfirmed.collect {
             passcodeListener.onPassCodeReceive(it)
-            snackbarHostState.showSnackbar(
-                message = "Passcode successfully created"
-            )
         }
     }
 
@@ -89,20 +84,22 @@ fun PasscodeScreen(
                 TextButton(
                     onClick = { passcodeListener.onPasscodeSkip() }
                 ) {
-                    Text(text = "Skip", style = skipButtonStyle)
+                    Text(text = stringResource(R.string.skip), style = skipButtonStyle)
                 }
             }
         }
         MifosIcon(modifier = Modifier.fillMaxWidth())
-        PasscodeHeader(
-            activeStep = activeStep,
-            isPasscodeAlreadySet = preferenceManager.hasPasscode
-        )
-        Row(
+
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp, bottom = 24.dp), horizontalArrangement = Arrangement.Center
+                .padding(top = 16.dp, bottom = 24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            PasscodeHeader(
+                activeStep = activeStep,
+                isPasscodeAlreadySet = preferenceManager.hasPasscode
+            )
             PasscodeView(viewModel = viewModel, passcodeListener = passcodeListener)
         }
         Spacer(modifier = Modifier.height(6.dp))
@@ -121,7 +118,10 @@ fun PasscodeScreen(
                 TextButton(
                     onClick = { passcodeListener.onPasscodeForgot() }
                 ) {
-                    Text(text = "Forgot Passcode, Login Manually", style = forgotButtonStyle)
+                    Text(
+                        text = stringResource(R.string.forgot_passcode_login_manually),
+                        style = forgotButtonStyle
+                    )
                 }
             }
         }
@@ -136,6 +136,8 @@ private fun PasscodeView(
 ) {
     val context = LocalContext.current
     val filledDots by viewModel.filledDots.collectAsState()
+    val passcodeVisible by viewModel.passcodeVisible.collectAsState()
+    val currentPasscode by viewModel.currentPasscodeInput.collectAsState()
     val xShake = remember { Animatable(initialValue = 0.0F) }
     val passcodeRejectedDialogVisible = remember { mutableStateOf(false) }
 
@@ -143,7 +145,7 @@ private fun PasscodeView(
         viewModel.onPasscodeRejected.collect {
             passcodeRejectedDialogVisible.value = true
             vibrateFeedback(context)
-
+            // write it at a different place
             xShake.animateTo(
                 targetValue = 0.dp.value,
                 animationSpec = keyframes {
@@ -170,58 +172,48 @@ private fun PasscodeView(
 
     Row(
         modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Row(
-            modifier = Modifier.offset(x = xShake.value.dp),
-            verticalAlignment = Alignment.CenterVertically,
+            modifier = modifier.offset(x = xShake.value.dp),
             horizontalArrangement = Arrangement.spacedBy(
                 space = 26.dp,
                 alignment = Alignment.CenterHorizontally
-            )
+            ),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            repeat(PasscodeViewModel.PASSCODE_LENGTH) { dot ->
-                val isFilledDot = dot + 1 <= filledDots
-                val dotColor = animateColorAsState(
-                    if (isFilledDot) keyTint else Color.DarkGray, label = ""
-                )
+            repeat(PasscodeViewModel.PASSCODE_LENGTH) { dotIndex ->
+                if (passcodeVisible && dotIndex < currentPasscode.length) {
+                    Text(
+                        text = currentPasscode[dotIndex].toString(),
+                        color = blueTint
+                    )
+                } else {
+                    val isFilledDot = dotIndex + 1 <= filledDots
+                    val dotColor = animateColorAsState(
+                        if (isFilledDot) blueTint else Color.Gray, label = ""
+                    )
 
-                Row(
-                    modifier = modifier
-                        .size(size = 14.dp)
-                        .background(
-                            color = dotColor.value,
-                            shape = CircleShape
-                        )
-                ) {}
+                    Box(
+                        modifier = Modifier
+                            .size(14.dp)
+                            .background(
+                                color = dotColor.value,
+                                shape = CircleShape
+                            )
+                    )
+                }
             }
         }
-    }
-}
-
-@Suppress("DEPRECATION")
-fun vibrateFeedback(context: Context) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        (context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager).vibrate(
-            CombinedVibration.createParallel(
-                VibrationEffect.createOneShot(
-                    VIBRATE_FEEDBACK_DURATION,
-                    VibrationEffect.DEFAULT_AMPLITUDE
-                )
+        IconButton(
+            onClick = { viewModel.togglePasscodeVisibility() },
+            modifier = Modifier.padding(start = 10.dp)
+        ) {
+            Icon(
+                imageVector = if (passcodeVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                contentDescription = null
             )
-        )
-    } else {
-        (context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator).let {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                it.vibrate(
-                    VibrationEffect.createOneShot(
-                        VIBRATE_FEEDBACK_DURATION,
-                        VibrationEffect.DEFAULT_AMPLITUDE
-                    )
-                )
-            } else {
-                it.vibrate(VIBRATE_FEEDBACK_DURATION)
-            }
         }
     }
 }

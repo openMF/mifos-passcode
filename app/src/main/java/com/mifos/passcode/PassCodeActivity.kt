@@ -26,15 +26,19 @@ class PassCodeActivity : AppCompatActivity(), PasscodeListener {
 
         setContent {
             MifosPasscodeTheme {
-                PasscodeScreen(passcodeViewModel,this,preferenceManager)
+                PasscodeScreen(
+                    passcodeViewModel,
+                    this,
+                    preferenceManager
+                )
             }
         }
     }
 
     override fun onPassCodeReceive(passcode: String) {
         if (preferenceManager.getSavedPasscode() == passcode) {
-            startActivity(Intent(this,LoginActivity::class.java))
-            Toast.makeText(this, "New Screen",Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, LoginActivity::class.java))
+            Toast.makeText(this, "New Screen", Toast.LENGTH_SHORT).show()
             finish()
         }
     }
@@ -42,13 +46,12 @@ class PassCodeActivity : AppCompatActivity(), PasscodeListener {
     override fun onPasscodeReject() {}
 
     override fun onPasscodeForgot() {
-        Toast.makeText(this, "Forgot Passcode",Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Forgot Passcode", Toast.LENGTH_SHORT).show()
         // Add logic to redirect user to login page
     }
 
     override fun onPasscodeSkip() {
-        startActivity(Intent(this,LoginActivity::class.java))
-        Toast.makeText(this, "New Screen After Skip",Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Skip Button", Toast.LENGTH_SHORT).show()
         finish()
     }
 }

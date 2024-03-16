@@ -4,6 +4,11 @@ import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import com.mifos.compose.R
 
+/**
+ * @author pratyush
+ * @since 15/3/24
+ */
+
 class PreferenceManager(context: Context) {
     private val sharedPreference = context.getSharedPreferences(
         R.string.pref_name.toString(),
