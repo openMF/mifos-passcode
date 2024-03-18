@@ -16,7 +16,7 @@ fun PasscodeMismatchedDialog(
     if (visible) {
         AlertDialog(
             shape = MaterialTheme.shapes.large,
-            title = { Text(text = "Passcodes do not match!") },
+            title = { Text(text = stringResource(R.string.passcodes_do_not_match)) },
             confirmButton = {
                 TextButton(onClick = onDismiss) {
                     Text(text = stringResource(R.string.try_again))

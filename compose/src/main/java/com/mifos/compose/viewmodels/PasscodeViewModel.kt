@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mifos.compose.utility.PreferenceManager
+import com.mifos.compose.utility.Step
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -137,11 +138,6 @@ class PasscodeViewModel(private val preferenceManager: PreferenceManager) : View
     fun restart() {
         resetData()
         _passcodeVisible.value = false
-    }
-
-    enum class Step(var index: Int) {
-        Create(0),
-        Confirm(1)
     }
 
     companion object {

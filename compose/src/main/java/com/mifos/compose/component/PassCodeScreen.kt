@@ -2,7 +2,6 @@ package com.mifos.compose.component
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.keyframes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,25 +24,24 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mifos.compose.R
 import com.mifos.compose.theme.blueTint
 import com.mifos.compose.theme.forgotButtonStyle
 import com.mifos.compose.theme.skipButtonStyle
-import com.mifos.compose.utility.InterfacePreviewProvider
-import com.mifos.compose.utility.PasscodeListener
 import com.mifos.compose.utility.PreferenceManager
+import com.mifos.compose.utility.ShakeAnimation.performShakeAnimation
 import com.mifos.compose.utility.VibrationFeedback.vibrateFeedback
 import com.mifos.compose.viewmodels.PasscodeViewModel
 
@@ -55,15 +53,31 @@ import com.mifos.compose.viewmodels.PasscodeViewModel
 @Composable
 fun PasscodeScreen(
     viewModel: PasscodeViewModel,
-    passcodeListener: PasscodeListener,
-    preferenceManager: PreferenceManager
+    preferenceManager: PreferenceManager,
+    onForgotButton: () -> Unit,
+    onSkipButton: () -> Unit,
+    onPasscodeConfirm: (String) -> Unit,
+    onPasscodeRejected: () -> Unit,
 ) {
-
-    val activeStep by viewModel.activeStep.collectAsState()
+    val context = LocalContext.current
+    val activeStep by viewModel.activeStep.collectAsStateWithLifecycle()
+    val filledDots by viewModel.filledDots.collectAsStateWithLifecycle()
+    val passcodeVisible by viewModel.passcodeVisible.collectAsStateWithLifecycle()
+    val currentPasscode by viewModel.currentPasscodeInput.collectAsStateWithLifecycle()
+    val xShake = remember { Animatable(initialValue = 0.0F) }
+    var passcodeRejectedDialogVisible by remember { mutableStateOf(false) }
 
     LaunchedEffect(key1 = true) {
         viewModel.onPasscodeConfirmed.collect {
-            passcodeListener.onPassCodeReceive(it)
+            onPasscodeConfirm(it)
+        }
+    }
+    LaunchedEffect(key1 = true) {
+        viewModel.onPasscodeRejected.collect {
+            passcodeRejectedDialogVisible = true
+            vibrateFeedback(context)
+            performShakeAnimation(xShake)
+            onPasscodeRejected()
         }
     }
 
@@ -82,7 +96,7 @@ fun PasscodeScreen(
                 horizontalArrangement = Arrangement.End
             ) {
                 TextButton(
-                    onClick = { passcodeListener.onPasscodeSkip() }
+                    onClick = { onSkipButton.invoke() }
                 ) {
                     Text(text = stringResource(R.string.skip), style = skipButtonStyle)
                 }
@@ -100,11 +114,22 @@ fun PasscodeScreen(
                 activeStep = activeStep,
                 isPasscodeAlreadySet = preferenceManager.hasPasscode
             )
-            PasscodeView(viewModel = viewModel, passcodeListener = passcodeListener)
+            PasscodeView(
+                filledDots = filledDots,
+                currentPasscode = currentPasscode,
+                passcodeVisible = passcodeVisible,
+                togglePasscodeVisibility = { viewModel.togglePasscodeVisibility() },
+                restart = { viewModel.restart() },
+                passcodeRejectedDialogVisible = passcodeRejectedDialogVisible,
+                onDismissDialog = { passcodeRejectedDialogVisible = false },
+                xShake = xShake
+            )
         }
         Spacer(modifier = Modifier.height(6.dp))
         PasscodeKeys(
-            viewModel = viewModel,
+            enterKey = { viewModel.enterKey(it) },
+            deleteKey = { viewModel.deleteKey() },
+            deleteAllKeys = { viewModel.deleteAllKeys() },
             modifier = Modifier.padding(horizontal = 12.dp)
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -116,7 +141,7 @@ fun PasscodeScreen(
                 horizontalArrangement = Arrangement.Center
             ) {
                 TextButton(
-                    onClick = { passcodeListener.onPasscodeForgot() }
+                    onClick = { onForgotButton.invoke() }
                 ) {
                     Text(
                         text = stringResource(R.string.forgot_passcode_login_manually),
@@ -131,42 +156,20 @@ fun PasscodeScreen(
 @Composable
 private fun PasscodeView(
     modifier: Modifier = Modifier,
-    viewModel: PasscodeViewModel,
-    passcodeListener: PasscodeListener
+    restart: () -> Unit,
+    togglePasscodeVisibility: () -> Unit,
+    filledDots: Int,
+    passcodeVisible: Boolean,
+    currentPasscode: String,
+    passcodeRejectedDialogVisible: Boolean,
+    onDismissDialog: () -> Unit,
+    xShake: Animatable<Float, *>
 ) {
-    val context = LocalContext.current
-    val filledDots by viewModel.filledDots.collectAsState()
-    val passcodeVisible by viewModel.passcodeVisible.collectAsState()
-    val currentPasscode by viewModel.currentPasscodeInput.collectAsState()
-    val xShake = remember { Animatable(initialValue = 0.0F) }
-    val passcodeRejectedDialogVisible = remember { mutableStateOf(false) }
-
-    LaunchedEffect(key1 = true) {
-        viewModel.onPasscodeRejected.collect {
-            passcodeRejectedDialogVisible.value = true
-            vibrateFeedback(context)
-            // write it at a different place
-            xShake.animateTo(
-                targetValue = 0.dp.value,
-                animationSpec = keyframes {
-                    0.0F at 0
-                    20.0F at 80
-                    -20.0F at 120
-                    10.0F at 160
-                    -10.0F at 200
-                    5.0F at 240
-                    0.0F at 280
-                }
-            )
-            passcodeListener.onPasscodeReject()
-        }
-    }
-
     PasscodeMismatchedDialog(
-        visible = passcodeRejectedDialogVisible.value,
+        visible = passcodeRejectedDialogVisible,
         onDismiss = {
-            passcodeRejectedDialogVisible.value = false
-            viewModel.restart()
+            onDismissDialog.invoke()
+            restart()
         }
     )
 
@@ -207,7 +210,7 @@ private fun PasscodeView(
             }
         }
         IconButton(
-            onClick = { viewModel.togglePasscodeVisibility() },
+            onClick = { togglePasscodeVisibility.invoke() },
             modifier = Modifier.padding(start = 10.dp)
         ) {
             Icon(
@@ -220,10 +223,10 @@ private fun PasscodeView(
 
 @Preview(showBackground = true)
 @Composable
-fun PassCode(@PreviewParameter(InterfacePreviewProvider::class) passcodeListener: PasscodeListener) {
+fun PasscodeScreenPreview() {
     PasscodeScreen(
         viewModel = PasscodeViewModel(PreferenceManager(LocalContext.current)),
-        passcodeListener,
-        PreferenceManager(LocalContext.current)
+        PreferenceManager(LocalContext.current),
+        {}, {}, {}, {}
     )
 }
