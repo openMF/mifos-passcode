@@ -6,6 +6,7 @@ import android.os.CombinedVibration
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
+import com.mifos.compose.utility.Constants.VIBRATE_FEEDBACK_DURATION
 
 /**
  * @author pratyush
@@ -13,8 +14,6 @@ import android.os.VibratorManager
  */
 
 object VibrationFeedback {
-
-    private const val VIBRATE_FEEDBACK_DURATION = 300L
 
     @Suppress("DEPRECATION")
     fun vibrateFeedback(context: Context) {
