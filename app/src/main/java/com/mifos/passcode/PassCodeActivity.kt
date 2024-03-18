@@ -5,29 +5,27 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import com.mifos.compose.viewmodels.PasscodeViewModel
 import com.mifos.compose.component.PasscodeScreen
 import com.mifos.compose.theme.MifosPasscodeTheme
 import com.mifos.compose.utility.PreferenceManager
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * Created by dilpreet on 19/01/18.
  */
+@AndroidEntryPoint
 class PassCodeActivity : AppCompatActivity() {
 
-    private lateinit var passcodeViewModel: PasscodeViewModel
-    private lateinit var preferenceManager: PreferenceManager
+    @Inject
+    lateinit var preferenceManager: PreferenceManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        preferenceManager = PreferenceManager(this)
-        passcodeViewModel = PasscodeViewModel(preferenceManager)
-
         setContent {
             MifosPasscodeTheme {
                 PasscodeScreen(
-                    passcodeViewModel,
-                    preferenceManager,
+                    preferenceManager = preferenceManager,
                     onForgotButton = { onPasscodeForgot() },
                     onSkipButton = { onPasscodeSkip() },
                     onPasscodeConfirm = { onPassCodeReceive(it) },

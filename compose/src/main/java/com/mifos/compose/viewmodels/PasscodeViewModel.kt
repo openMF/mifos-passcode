@@ -3,20 +3,24 @@ package com.mifos.compose.viewmodels
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mifos.compose.utility.Constants.PASSCODE_LENGTH
 import com.mifos.compose.utility.PreferenceManager
 import com.mifos.compose.utility.Step
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * @author pratyush
  * @since 15/3/24
  */
 
-class PasscodeViewModel(private val preferenceManager: PreferenceManager) : ViewModel() {
+@HiltViewModel
+class PasscodeViewModel @Inject constructor(private val preferenceManager: PreferenceManager) : ViewModel() {
 
     private val _onPasscodeConfirmed = MutableSharedFlow<String>()
     private val _onPasscodeRejected = MutableSharedFlow<Unit>()
@@ -138,10 +142,5 @@ class PasscodeViewModel(private val preferenceManager: PreferenceManager) : View
     fun restart() {
         resetData()
         _passcodeVisible.value = false
-    }
-
-    companion object {
-        const val STEPS_COUNT = 2
-        const val PASSCODE_LENGTH = 4
     }
 }
