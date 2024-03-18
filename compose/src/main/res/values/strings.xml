@@ -19,6 +19,7 @@
     <string name="skip">Skip</string>
     <string name="forgot_passcode_login_manually">Forgot Passcode, Login Manually</string>
     <string name="try_again">Try again</string>
-    <string name="passcodes_do_not_match">Passcodes do not match!</string>
+    <string name="passcode_do_not_match">Passcode do not match!</string>
+    <string name="are_you_sure_you_want_to_exit">Are you sure you want to exit?</string>
 
 </resources>
