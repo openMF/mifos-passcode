@@ -5,6 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.mifos.compose.R
 
@@ -16,10 +17,16 @@ fun PasscodeMismatchedDialog(
     if (visible) {
         AlertDialog(
             shape = MaterialTheme.shapes.large,
-            title = { Text(text = stringResource(R.string.passcodes_do_not_match)) },
+            containerColor = Color.White,
+            title = {
+                Text(
+                    text = stringResource(R.string.passcode_do_not_match),
+                    color = Color.Black
+                )
+            },
             confirmButton = {
                 TextButton(onClick = onDismiss) {
-                    Text(text = stringResource(R.string.try_again))
+                    Text(text = stringResource(R.string.try_again), color = Color.Black)
                 }
             },
             onDismissRequest = onDismiss
