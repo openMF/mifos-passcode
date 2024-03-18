@@ -14,11 +14,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.mifos.compose.viewmodels.PasscodeViewModel
 import com.mifos.compose.R
+import com.mifos.compose.utility.Step
 
 @Composable
-fun PasscodeToolbar(activeStep: PasscodeViewModel.Step, hasPasscode: Boolean) {
+fun PasscodeToolbar(activeStep: Step, hasPasscode: Boolean) {
     val exitWarningDialogVisible = remember { mutableStateOf(false) }
     ExitWarningDialog(
         visible = exitWarningDialogVisible.value,
@@ -34,7 +34,7 @@ fun PasscodeToolbar(activeStep: PasscodeViewModel.Step, hasPasscode: Boolean) {
             .padding(top = 8.dp),
         horizontalArrangement = Arrangement.Center
     ) {
-        if(!hasPasscode) {
+        if (!hasPasscode) {
             PasscodeStepIndicator(
                 activeStep = activeStep
             )

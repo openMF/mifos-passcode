@@ -15,8 +15,6 @@ class PreferenceManager(context: Context) {
         Context.MODE_PRIVATE
     )
 
-    var isPasscodeWrong = mutableStateOf(false)
-
     var hasPasscode: Boolean
         get() = sharedPreference.getBoolean(R.string.has_passcode.toString(), false)
         set(value) = sharedPreference.edit().putBoolean(R.string.has_passcode.toString(), value)
@@ -29,11 +27,5 @@ class PreferenceManager(context: Context) {
 
     fun getSavedPasscode(): String {
         return sharedPreference.getString(R.string.passcode.toString(), "").toString()
-    }
-
-    fun clearPasscode() {
-        sharedPreference.edit().clear().apply()
-        hasPasscode = false
-        isPasscodeWrong.value = false
     }
 }

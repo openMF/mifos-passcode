@@ -22,29 +22,30 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.mifos.compose.viewmodels.PasscodeViewModel
 import com.mifos.compose.R
 import com.mifos.compose.theme.PasscodeKeyButtonStyle
 import com.mifos.compose.theme.blueTint
-import com.mifos.compose.utility.PreferenceManager
 
 @Composable
 fun PasscodeKeys(
-    viewModel: PasscodeViewModel,
+    enterKey: (String) -> Unit,
+    deleteKey: () -> Unit,
+    deleteAllKeys: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val onEnterKeyClick = { keyTitle: String ->
-        viewModel.enterKey(keyTitle)
+        enterKey(keyTitle)
     }
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .padding(16.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
         Row(modifier = Modifier.fillMaxWidth()) {
             PasscodeKey(
                 modifier = Modifier.weight(weight = 1.0F),
@@ -108,10 +109,10 @@ fun PasscodeKeys(
                 keyIcon = ImageVector.vectorResource(id = R.drawable.ic_delete),
                 keyIconContentDescription = "Delete Passcode Key Button",
                 onClick = {
-                    viewModel.deleteKey()
+                    deleteKey()
                 },
                 onLongClick = {
-                    viewModel.deleteAllKeys()
+                    deleteAllKeys()
                 }
             )
         }
@@ -197,5 +198,5 @@ fun CombinedClickableIconButton(
 @Preview
 @Composable
 fun PasscodeKeysPreview() {
-    PasscodeKeys(viewModel = PasscodeViewModel(PreferenceManager(LocalContext.current)))
+    PasscodeKeys({}, {}, {})
 }

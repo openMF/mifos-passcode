@@ -11,13 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.mifos.compose.viewmodels.PasscodeViewModel
 import com.mifos.compose.theme.blueTint
+import com.mifos.compose.utility.Step
+import com.mifos.compose.viewmodels.PasscodeViewModel
 
 @Composable
 fun PasscodeStepIndicator(
     modifier: Modifier = Modifier,
-    activeStep: PasscodeViewModel.Step
+    activeStep: Step
 ) {
     Row(
         modifier = modifier,

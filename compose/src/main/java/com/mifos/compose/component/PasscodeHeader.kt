@@ -22,19 +22,19 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mifos.compose.viewmodels.PasscodeViewModel
 import com.mifos.compose.R
+import com.mifos.compose.utility.Step
 
 @Composable
 fun PasscodeHeader(
     modifier: Modifier = Modifier,
-    activeStep: PasscodeViewModel.Step,
+    activeStep: Step,
     isPasscodeAlreadySet: Boolean,
 ) {
     val transitionState = remember { MutableTransitionState(activeStep) }
     transitionState.targetState = activeStep
 
-    val transition: Transition<PasscodeViewModel.Step> = updateTransition(
+    val transition: Transition<Step> = updateTransition(
         transitionState = transitionState,
         label = "Headers Transition"
     )
@@ -45,22 +45,22 @@ fun PasscodeHeader(
     val positiveOffset = Offset(x = offset, y = 0.0F)
 
     val xTransitionHeader1 by transition.animateOffset(label = "Transition Offset Header 1") {
-        if (it == PasscodeViewModel.Step.Create) zeroOffset else negativeOffset
+        if (it == Step.Create) zeroOffset else negativeOffset
     }
     val xTransitionHeader2 by transition.animateOffset(label = "Transition Offset Header 2") {
-        if (it == PasscodeViewModel.Step.Confirm) zeroOffset else positiveOffset
+        if (it == Step.Confirm) zeroOffset else positiveOffset
     }
     val alphaHeader1 by transition.animateFloat(label = "Transition Alpha Header 1") {
-        if (it == PasscodeViewModel.Step.Create) 1.0F else 0.0F
+        if (it == Step.Create) 1.0F else 0.0F
     }
     val alphaHeader2 by transition.animateFloat(label = "Transition Alpha Header 2") {
-        if (it == PasscodeViewModel.Step.Confirm) 1.0F else 0.0F
+        if (it == Step.Confirm) 1.0F else 0.0F
     }
     val scaleHeader1 by transition.animateFloat(label = "Transition Alpha Header 1") {
-        if (it == PasscodeViewModel.Step.Create) 1.0F else 0.5F
+        if (it == Step.Create) 1.0F else 0.5F
     }
     val scaleHeader2 by transition.animateFloat(label = "Transition Alpha Header 2") {
-        if (it == PasscodeViewModel.Step.Confirm) 1.0F else 0.5F
+        if (it == Step.Confirm) 1.0F else 0.5F
     }
 
     Box(
@@ -81,7 +81,7 @@ fun PasscodeHeader(
                     style = TextStyle(fontSize = 20.sp)
                 )
             } else {
-                if (activeStep == PasscodeViewModel.Step.Create) {
+                if (activeStep == Step.Create) {
                     Text(
                         modifier = Modifier
                             .offset(x = xTransitionHeader1.x.dp)
@@ -90,7 +90,7 @@ fun PasscodeHeader(
                         text = stringResource(id = R.string.create_passcode),
                         style = TextStyle(fontSize = 20.sp)
                     )
-                } else if (activeStep == PasscodeViewModel.Step.Confirm) {
+                } else if (activeStep == Step.Confirm) {
                     Text(
                         modifier = Modifier
                             .offset(x = xTransitionHeader2.x.dp)
@@ -108,5 +108,5 @@ fun PasscodeHeader(
 @Preview
 @Composable
 fun PasscodeHeaderPreview() {
-    PasscodeHeader(activeStep = PasscodeViewModel.Step.Create, isPasscodeAlreadySet = true)
+    PasscodeHeader(activeStep = Step.Create, isPasscodeAlreadySet = true)
 }
