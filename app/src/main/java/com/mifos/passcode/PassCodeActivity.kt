@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import com.mifos.compose.PasscodeRepository
 import com.mifos.compose.component.PasscodeScreen
 import com.mifos.compose.theme.MifosPasscodeTheme
 import com.mifos.compose.utility.PreferenceManager
@@ -18,14 +19,13 @@ import javax.inject.Inject
 class PassCodeActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var preferenceManager: PreferenceManager
+    lateinit var passcodeRepository: PasscodeRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MifosPasscodeTheme {
                 PasscodeScreen(
-                    preferenceManager = preferenceManager,
                     onForgotButton = { onPasscodeForgot() },
                     onSkipButton = { onPasscodeSkip() },
                     onPasscodeConfirm = { onPassCodeReceive(it) },
@@ -36,7 +36,7 @@ class PassCodeActivity : AppCompatActivity() {
     }
 
     private fun onPassCodeReceive(passcode: String) {
-        if (preferenceManager.getSavedPasscode() == passcode) {
+        if (passcodeRepository.getSavedPasscode() == passcode) {
             startActivity(Intent(this, LoginActivity::class.java))
             Toast.makeText(this, "New Screen", Toast.LENGTH_SHORT).show()
             finish()
@@ -46,8 +46,8 @@ class PassCodeActivity : AppCompatActivity() {
     private fun onPasscodeReject() {}
 
     private fun onPasscodeForgot() {
-        Toast.makeText(this, "Forgot Passcode", Toast.LENGTH_SHORT).show()
         // Add logic to redirect user to login page
+        Toast.makeText(this, "Forgot Passcode", Toast.LENGTH_SHORT).show()
     }
 
     private fun onPasscodeSkip() {

@@ -21,7 +21,6 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -32,15 +31,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.mifos.compose.R
+import com.mifos.compose.PasscodeRepository
 import com.mifos.compose.theme.blueTint
-import com.mifos.compose.theme.forgotButtonStyle
-import com.mifos.compose.theme.skipButtonStyle
 import com.mifos.compose.utility.Constants.PASSCODE_LENGTH
 import com.mifos.compose.utility.PreferenceManager
 import com.mifos.compose.utility.ShakeAnimation.performShakeAnimation
@@ -55,13 +51,13 @@ import com.mifos.compose.viewmodels.PasscodeViewModel
 @Composable
 fun PasscodeScreen(
     viewModel: PasscodeViewModel = hiltViewModel(),
-    preferenceManager: PreferenceManager,
     onForgotButton: () -> Unit,
     onSkipButton: () -> Unit,
     onPasscodeConfirm: (String) -> Unit,
     onPasscodeRejected: () -> Unit,
 ) {
     val context = LocalContext.current
+    val preferenceManager = remember { PreferenceManager(context) }
     val activeStep by viewModel.activeStep.collectAsStateWithLifecycle()
     val filledDots by viewModel.filledDots.collectAsStateWithLifecycle()
     val passcodeVisible by viewModel.passcodeVisible.collectAsStateWithLifecycle()
@@ -69,12 +65,12 @@ fun PasscodeScreen(
     val xShake = remember { Animatable(initialValue = 0.0F) }
     var passcodeRejectedDialogVisible by remember { mutableStateOf(false) }
 
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(key1 = viewModel.onPasscodeConfirmed) {
         viewModel.onPasscodeConfirmed.collect {
             onPasscodeConfirm(it)
         }
     }
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(key1 = viewModel.onPasscodeRejected) {
         viewModel.onPasscodeRejected.collect {
             passcodeRejectedDialogVisible = true
             vibrateFeedback(context)
@@ -90,22 +86,11 @@ fun PasscodeScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         PasscodeToolbar(activeStep = activeStep, preferenceManager.hasPasscode)
-        if (!preferenceManager.hasPasscode) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(end = 16.dp),
-                horizontalArrangement = Arrangement.End
-            ) {
-                TextButton(
-                    onClick = { onSkipButton.invoke() }
-                ) {
-                    Text(text = stringResource(R.string.skip), style = skipButtonStyle)
-                }
-            }
-        }
+        PasscodeSkipButton(
+            onSkipButton = { onSkipButton.invoke() },
+            hasPassCode = preferenceManager.hasPasscode
+        )
         MifosIcon(modifier = Modifier.fillMaxWidth())
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -135,23 +120,10 @@ fun PasscodeScreen(
             modifier = Modifier.padding(horizontal = 12.dp)
         )
         Spacer(modifier = Modifier.height(8.dp))
-        if (preferenceManager.hasPasscode) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(end = 16.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                TextButton(
-                    onClick = { onForgotButton.invoke() }
-                ) {
-                    Text(
-                        text = stringResource(R.string.forgot_passcode_login_manually),
-                        style = forgotButtonStyle
-                    )
-                }
-            }
-        }
+        PasscodeForgotButton(
+            onForgotButton = { onForgotButton.invoke() },
+            hasPassCode = preferenceManager.hasPasscode
+        )
     }
 }
 
@@ -227,8 +199,17 @@ private fun PasscodeView(
 @Composable
 fun PasscodeScreenPreview() {
     PasscodeScreen(
-        viewModel = PasscodeViewModel(PreferenceManager(LocalContext.current)),
-        PreferenceManager(LocalContext.current),
+        viewModel = PasscodeViewModel(object : PasscodeRepository {
+            override fun getSavedPasscode(): String {
+                return ""
+            }
+
+            override val hasPasscode: Boolean
+                get() = false
+
+            override fun savePasscode(passcode: String) {}
+
+        }),
         {}, {}, {}, {}
     )
 }
