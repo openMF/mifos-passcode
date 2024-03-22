@@ -31,39 +31,39 @@ class FpAuthHelper(private val context: Context, private val fpAuthCallback: FpA
             cancellationSignal = CancellationSignal()
         }
 
-        val fingerprintManager = FingerprintManagerCompat.from(context)
-
-        fingerprintManager.authenticate(
-                null, 0, cancellationSignal,
-                object : FingerprintManagerCompat.AuthenticationCallback() {
-
-                    override fun onAuthenticationHelp(helpMsgId: Int, helpString: CharSequence?) {
-                        super.onAuthenticationHelp(helpMsgId, helpString)
-                        Toast.makeText(context, helpString, Toast.LENGTH_SHORT).show()
-                    }
-
-                    override fun onAuthenticationFailed() {
-                        super.onAuthenticationFailed()
-                        fpAuthDialog.run {
-                            setStatusIcon(R.drawable.ic_cancel_red_48dp)
-                            setStatusText(context.getString(R.string.finger_print_not_recognized))
-                        }
-                        handler.postDelayed(startScanning, AUTH_FAILED_DELAY)
-                    }
-
-                    override fun onAuthenticationSucceeded(result: FingerprintManagerCompat.AuthenticationResult?) {
-                        super.onAuthenticationSucceeded(result)
-                        fpAuthDialog.run {
-                            setStatusIcon(R.drawable.ic_check_circle_green_48dp)
-                            setStatusText(context.getString(R.string.authentication_successful))
-                        }
-                        handler.postDelayed({
-                            fpAuthDialog.dismiss()
-                            fpAuthCallback.onFpAuthSuccess()
-                        }, AUTH_SUCCESS_DELAY)
-                    }
-                }, null
-        )
+//        val fingerprintManager = FingerprintManagerCompat.from(context)
+//
+//        fingerprintManager.authenticate(
+//                null, 0, cancellationSignal,
+//                object : FingerprintManagerCompat.AuthenticationCallback() {
+//
+//                    override fun onAuthenticationHelp(helpMsgId: Int, helpString: CharSequence?) {
+//                        super.onAuthenticationHelp(helpMsgId, helpString)
+//                        Toast.makeText(context, helpString, Toast.LENGTH_SHORT).show()
+//                    }
+//
+//                    override fun onAuthenticationFailed() {
+//                        super.onAuthenticationFailed()
+//                        fpAuthDialog.run {
+//                            setStatusIcon(R.drawable.ic_cancel_red_48dp)
+//                            setStatusText(context.getString(R.string.finger_print_not_recognized))
+//                        }
+//                        handler.postDelayed(startScanning, AUTH_FAILED_DELAY)
+//                    }
+//
+//                    override fun onAuthenticationSucceeded(result: FingerprintManagerCompat.AuthenticationResult?) {
+//                        super.onAuthenticationSucceeded(result)
+//                        fpAuthDialog.run {
+//                            setStatusIcon(R.drawable.ic_check_circle_green_48dp)
+//                            setStatusText(context.getString(R.string.authentication_successful))
+//                        }
+//                        handler.postDelayed({
+//                            fpAuthDialog.dismiss()
+//                            fpAuthCallback.onFpAuthSuccess()
+//                        }, AUTH_SUCCESS_DELAY)
+//                    }
+//                }, null
+//        )
     }
 
     fun stopFpAuth() {

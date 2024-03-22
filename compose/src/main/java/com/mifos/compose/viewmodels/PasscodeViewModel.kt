@@ -3,8 +3,8 @@ package com.mifos.compose.viewmodels
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mifos.compose.PasscodeRepository
 import com.mifos.compose.utility.Constants.PASSCODE_LENGTH
-import com.mifos.compose.utility.PreferenceManager
 import com.mifos.compose.utility.Step
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -20,7 +20,8 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class PasscodeViewModel @Inject constructor(private val preferenceManager: PreferenceManager) : ViewModel() {
+class PasscodeViewModel @Inject constructor(private val passcodeRepository: PasscodeRepository) :
+    ViewModel() {
 
     private val _onPasscodeConfirmed = MutableSharedFlow<String>()
     private val _onPasscodeRejected = MutableSharedFlow<Unit>()
@@ -43,7 +44,7 @@ class PasscodeViewModel @Inject constructor(private val preferenceManager: Prefe
     private val _currentPasscodeInput = MutableStateFlow("")
     val currentPasscodeInput = _currentPasscodeInput.asStateFlow()
 
-    private var _isPasscodeAlreadySet = mutableStateOf(preferenceManager.hasPasscode)
+    private var _isPasscodeAlreadySet = mutableStateOf(passcodeRepository.hasPasscode)
 
     init {
         resetData()
@@ -90,7 +91,7 @@ class PasscodeViewModel @Inject constructor(private val preferenceManager: Prefe
 
         if (_filledDots.value == PASSCODE_LENGTH) {
             if (_isPasscodeAlreadySet.value) {
-                if (preferenceManager.getSavedPasscode() == createPasscode.toString()) {
+                if (passcodeRepository.getSavedPasscode() == createPasscode.toString()) {
                     emitOnPasscodeConfirmed(createPasscode.toString())
                     createPasscode.clear()
                 } else {
@@ -105,7 +106,7 @@ class PasscodeViewModel @Inject constructor(private val preferenceManager: Prefe
             } else {
                 if (createPasscode.toString() == confirmPasscode.toString()) {
                     emitOnPasscodeConfirmed(confirmPasscode.toString())
-                    preferenceManager.savePasscode(confirmPasscode.toString())
+                    passcodeRepository.savePasscode(confirmPasscode.toString())
                     _isPasscodeAlreadySet.value = true
                     resetData()
                 } else {
