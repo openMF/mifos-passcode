@@ -1,13 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.devtools.ksp'
 apply plugin: 'com.google.dagger.hilt.android'
 
 android {
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     signingConfigs {
         release {
@@ -19,7 +18,7 @@ android {
     }
     compileSdk 34
     defaultConfig {
-        applicationId "com.mifos.passcode"
+        namespace "com.mifos.passcode"
         minSdk 21
         targetSdk 34
         versionCode 1
@@ -37,12 +36,11 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.2"
+        kotlinCompilerExtensionVersion = "1.5.2"
     }
-    kapt {
-        correctErrorTypes true
+    kotlinOptions {
+        jvmTarget = '17'
     }
-
 }
 
 dependencies {
@@ -71,8 +69,8 @@ dependencies {
 
 
     // Hilt Implementation
-    implementation 'com.google.dagger:hilt-android:2.46.1'
-    kapt 'com.google.dagger:hilt-compiler:2.46.1'
+    implementation 'com.google.dagger:hilt-android:2.48.1'
+    ksp("com.google.dagger:hilt-compiler:2.48.1")
 }
 repositories {
     mavenCentral()
