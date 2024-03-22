@@ -1,5 +1,5 @@
-# mobile-passcode
-Library for passcode implementation along with an optional additional feature to ask for passcode when your app resumes from background. (Works with minSDK >= 15)
+# Mobile-Passcode
+Library for passcode implementation along with an optional additional feature to ask for passcode when your app resumes from background. (Works with minSDK >= 21)
 
 Usage
 -----
@@ -21,90 +21,50 @@ allprojects {
 
 ```gradle
 dependencies {
-	implementation 'com.mifos.mobile:mifos-passcode:1.0.0'
+	implementation 'com.github.openMF.mifos-passcode:compose:1.0.3'
 }
 ```
 
 ## Example
 
-<img src="https://raw.githubusercontent.com/openMF/mobile-passcode/master/graphic/demo.png" width=250 height=450/>
+https://github.com/openMF/mifos-passcode/assets/90026952/ee9e9610-fdb6-49d3-b485-9eb9cd78fb9f
 
 For a basic implementation of the PassCode Screen
+- Inject the `PasscodeRepository` in your activity which is essentially abstracting the operations related to saving, retrieving, and validating the passcode
+- Import `PasscodeScreen` to your project which has 4 parameters mentioned below:
+  - `onForgotButton`: This will allow to handle the case when the user isn't able to log into the app. In our project we are redirecting the user to login page
+  - `onSkipButton`: This offers users the flexibility to bypass the passcode setup process, granting them immediate access to the desired screen
+  - `onPasscodeConfirm`: This allows you to pass a function that accepts a string parameter
+  - `onPasscodeRejected`: This can be used to handle the event when user has entered a wrong passcode
 
-```java
-public class PassCodeActivity extends MifosPassCodeActivity {
+- This is how a typical implementation would look like
 
-    @Override
-    public int getLogo() {
-        //logo to be shown on the top
-        return R.drawable.your_logo;
+```kotlin
+    @Inject
+    lateinit var passcodeRepository: PasscodeRepository
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MifosPasscodeTheme {
+                PasscodeScreen(
+                    onForgotButton = {},
+                    onSkipButton = {},
+                    onPasscodeConfirm = {},
+                    onPasscodeRejected = {}
+                )
+            }
+        }
     }
-
-    @Override
-    public void startNextActivity() {
-        //start intent for the next activity
-    }
-
-    @Override
-    public void startLoginActivity() {
-        //start intent for the login or previous activity
-    }
-
-    @Override
-    public void showToaster(View view, int msg) {
-        //show prompts in toast or using snackbar
-    }
-
-    @Override
-    public int getEncryptionType() {
-        return EncryptionUtil.DEFAULT;
-    }
-
-}
-
 ```
+- You can now define functions of your own and pass them to their respective fields. You can find the entire implementation in the `PasscodeActivity` of `:app` module
 
-There are 4 different types of encryption methods available with respect to our Android Projects:
- - DEFAULT
- - MOBILE_BANKING
- - ANDROID_CLIENT  
- - FINERACT_CN
- 
-To access the passcode stored use `PasscodePreferencesHelper`
-```java
-PasscodePreferencesHelper pref = new PasscodePreferencesHelper(context);
-pref.getPassCode();// it will return encrypted passcode according to the encryption type chosen.
-
-```
-
-## Asking for the passcode when your app resumes from background
-
-Create a `BaseActivity` which should extend `BasePassCodeActivity` and extend this class for all your activities
-
-```java
-public class BaseActivity extends BasePassCodeActivity {
-
-    @Override
-    public Class getPassCodeClass() {
-        //name of the activity which extends MifosPassCodeActivity
-        return PassCodeActivity.class;
-    }
-}
-
-```
-
-In your application class add:
-
-```java
-public class MifosApplication extends Application {
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        //Initialize ForegroundChecker
-        ForegroundChecker.init(this);
-    }
-}
-```
-
-For complete example click <a href="https://github.com/openMF/mobile-passcode/tree/master/app/src/main">here</a> 
+## Screenshots
+- Here are some screenshots of the app
+<table>
+  <tr>
+    <td><img src="https://github.com/openMF/mifos-passcode/assets/90026952/34cf73fd-68dc-4f6b-915b-690310238b10" width=250 height=510></td>
+    <td><img src="https://github.com/openMF/mifos-passcode/assets/90026952/e01c0357-9bd2-4472-b2c1-3826be89cd8c" width=250 height=510></td>
+    <td><img src="https://github.com/openMF/mifos-passcode/assets/90026952/377d83da-1956-45c6-96c1-7befbf545264" width=250 height=510></td>
+  </tr>
+</table>
