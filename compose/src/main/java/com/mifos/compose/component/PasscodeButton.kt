@@ -1,9 +1,12 @@
 package com.mifos.compose.component
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -13,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.mifos.compose.R
 import com.mifos.compose.theme.forgotButtonStyle
 import com.mifos.compose.theme.skipButtonStyle
+import com.mifos.compose.theme.useTouchIdButtonStyle
 
 @Composable
 fun PasscodeSkipButton(
@@ -56,6 +60,24 @@ fun PasscodeForgotButton(
                     style = forgotButtonStyle
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun UseTouchIdButton(
+    onClick: () -> Unit
+){
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(end = 16.dp),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        TextButton(
+            onClick =  onClick
+        ) {
+            Text(text = stringResource(R.string.use_touchId), style = useTouchIdButtonStyle)
         }
     }
 }

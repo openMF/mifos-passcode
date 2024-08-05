@@ -30,3 +30,9 @@ val forgotButtonStyle = TextStyle(
     fontSize = 14.sp,
     fontFamily = LatoFonts
 )
+
+val useTouchIdButtonStyle = TextStyle(
+    color = blueTint,
+    fontSize = 14.sp,
+    fontFamily = LatoFonts
+)

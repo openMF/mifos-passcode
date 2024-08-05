@@ -21,5 +21,11 @@
     <string name="try_again">Try again</string>
     <string name="passcode_do_not_match">Passcode do not match!</string>
     <string name="are_you_sure_you_want_to_exit">Are you sure you want to exit?</string>
+    <string name="use_touchId">Use TouchId</string>
+    <string name="authentication_failed">Authentication failed</string>
+    <string name="authentication_not_set">Authentication not set</string>
+    <string name="authentication_not_available">Feature unavailable</string>
+    <string name="biometric_auth_title">Unlock Mifos</string>
+    <string name="biometric_auth_description">Confirm your screen lock pattern, PIN, password, or fingerprint to unlock</string>
 
 </resources>

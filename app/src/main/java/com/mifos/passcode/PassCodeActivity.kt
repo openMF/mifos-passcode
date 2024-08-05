@@ -29,7 +29,9 @@ class PassCodeActivity : AppCompatActivity() {
                     onForgotButton = { onPasscodeForgot() },
                     onSkipButton = { onPasscodeSkip() },
                     onPasscodeConfirm = { onPassCodeReceive(it) },
-                    onPasscodeRejected = { onPasscodeReject() }
+                    onPasscodeRejected = { onPasscodeReject() },
+                    activity = this,
+                    onBiometricAuthenticated = { launchNextActivity() }
                 )
             }
         }
@@ -37,10 +39,14 @@ class PassCodeActivity : AppCompatActivity() {
 
     private fun onPassCodeReceive(passcode: String) {
         if (passcodeRepository.getSavedPasscode() == passcode) {
-            startActivity(Intent(this, LoginActivity::class.java))
-            Toast.makeText(this, "New Screen", Toast.LENGTH_SHORT).show()
-            finish()
+            launchNextActivity()
         }
+    }
+
+    private fun launchNextActivity() {
+        startActivity(Intent(this, LoginActivity::class.java))
+        Toast.makeText(this, "New Screen", Toast.LENGTH_SHORT).show()
+        finish()
     }
 
     private fun onPasscodeReject() {}
