@@ -45,7 +45,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.mifos.compose.BiometricPromptManager
+import com.mifos.compose.utility.BiometricPromptManager
 import com.mifos.compose.PasscodeRepository
 import com.mifos.compose.R
 import com.mifos.compose.theme.blueTint
@@ -84,9 +84,7 @@ fun PasscodeScreen(
     )
     val enrollLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult(),
-        onResult = {
-            println("Activity result: $it")
-        }
+        onResult = {}
     )
 
     LaunchedEffect(biometricResult) {
@@ -101,6 +99,7 @@ fun PasscodeScreen(
                 enrollLauncher.launch(enrollIntent)
             }
         }
+
     }
 
     LaunchedEffect(true){
@@ -113,10 +112,9 @@ fun PasscodeScreen(
     }
 
     biometricResult?.let { result ->
-
         when(result) {
             is BiometricPromptManager.BiometricResult.AuthenticationError -> {
-                result.error
+                Toast.makeText(context, result.error, Toast.LENGTH_SHORT).show()
             }
             BiometricPromptManager.BiometricResult.AuthenticationFailed -> {
                 Toast.makeText(context, R.string.authentication_failed, Toast.LENGTH_SHORT).show()

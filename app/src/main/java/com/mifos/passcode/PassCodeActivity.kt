@@ -45,7 +45,6 @@ class PassCodeActivity : AppCompatActivity() {
 
     private fun launchNextActivity() {
         startActivity(Intent(this, LoginActivity::class.java))
-        Toast.makeText(this, "New Screen", Toast.LENGTH_SHORT).show()
         finish()
     }
 

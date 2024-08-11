@@ -1,4 +1,4 @@
-package com.mifos.compose
+package com.mifos.compose.utility
 
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -9,7 +9,9 @@ import androidx.biometric.BiometricPrompt
 import androidx.biometric.BiometricPrompt.PromptInfo
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
+import javax.inject.Singleton
 
+@Singleton
 class BiometricPromptManager(
     private val activity: AppCompatActivity
 ) {
