@@ -1,5 +1,7 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+plugins {
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinAndroid)
+}
 
 ext {
     bintrayRepo = 'maven'
@@ -59,14 +61,14 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.6.0'
+    implementation libs.appcompat
+    implementation libs.material
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test:runner:1.6.0-alpha04'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.0-alpha01'
-    implementation "androidx.core:core-ktx:+"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.runner
+    androidTestImplementation libs.androidx.espresso.core.v360alpha01
+    implementation libs.androidx.core.ktx.v1131
+    implementation libs.kotlin.stdlib.jdk8
 }
 
 tasks.withType(Javadoc) {
