@@ -5,7 +5,7 @@ interface BioMetricUtil {
     suspend fun setAndReturnPublicKey(): String?
     suspend fun authenticate(): AuthenticationResult
     fun canAuthenticate(): Boolean
-    suspend fun generatePublicKey(): String?
+    fun generatePublicKey(): String?
     fun signUserId(ucc: String): String
     fun isBiometricSet(): Boolean
     fun getPublicKey(): String?

@@ -21,6 +21,7 @@
     <string name="passcode_do_not_match">Passcode do not match!</string>
     <string name="are_you_sure_you_want_to_exit">Are you sure you want to exit?</string>
     <string name="use_touchId">Use TouchId</string>
+    <string name="use_faceId">Use FaceId</string>h
     <string name="authentication_failed">Authentication failed</string>
     <string name="authentication_not_set">Authentication not set</string>
     <string name="authentication_not_available">Feature unavailable</string>
