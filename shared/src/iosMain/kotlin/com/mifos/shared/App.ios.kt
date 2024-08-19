@@ -8,22 +8,17 @@ import platform.UIKit.UIViewController
 
 fun MainViewController(
     bioMetricUtil: BioMetricUtil,
-    biometricViewModel: BiometricAuthorizationViewModel,
-    onPasscodeConfirm: () -> Unit,
-): UIViewController = ComposeUIViewController {
+    biometricViewModel: BiometricAuthorizationViewModel): UIViewController = ComposeUIViewController {
     PasscodeScreen(
         onPasscodeConfirm = {
-            onPasscodeConfirm()
         },
         onSkipButton = {
-            onPasscodeConfirm()
         },
         onForgotButton = {},
         onPasscodeRejected = {},
         bioMetricUtil = bioMetricUtil,
         biometricAuthorizationViewModel = biometricViewModel,
         onBiometricAuthSuccess = {
-            onPasscodeConfirm()
-        }
+         }
     )
 }
