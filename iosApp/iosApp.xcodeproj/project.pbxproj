@@ -12,8 +12,6 @@
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		233D688A2C65FB740071A8DB /* BiometricUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233D68892C65FB740071A8DB /* BiometricUtil.swift */; };
 		233D688C2C65FBB00071A8DB /* CipherUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233D688B2C65FBB00071A8DB /* CipherUtil.swift */; };
-		238E63B22C43A6CA009CC6DA /* SetPublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238E63B12C43A6CA009CC6DA /* SetPublicKey.swift */; };
-		238E63B42C43A92C009CC6DA /* VerifyBiometric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238E63B32C43A92C009CC6DA /* VerifyBiometric.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		B4058FFAC578793E917A8C84 /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF023C9E821DAC5AA81FB02 /* Pods_iosApp.framework */; };
 /* End PBXBuildFile section */
@@ -141,6 +139,9 @@
 		7555FF73242A565900829871 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					New,
+				);
 				LastSwiftUpdateCheck = 1130;
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = orgName;
@@ -228,11 +229,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				233D688A2C65FB740071A8DB /* BiometricUtil.swift in Sources */,
-				238E63B22C43A6CA009CC6DA /* SetPublicKey.swift in Sources */,
 				233D688C2C65FBB00071A8DB /* CipherUtil.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
-				238E63B42C43A92C009CC6DA /* VerifyBiometric.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +296,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -352,6 +352,7 @@
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
