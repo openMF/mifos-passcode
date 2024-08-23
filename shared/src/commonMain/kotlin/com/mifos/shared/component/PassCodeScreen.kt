@@ -37,19 +37,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.mifos.shared.Platform
-import com.mifos.shared.getPlatform
 import com.mifos.shared.utility.BioMetricUtil
 import com.mifos.shared.utility.PreferenceManager
 import com.mifos.shared.theme.blueTint
 import com.mifos.shared.utility.Constants.PASSCODE_LENGTH
 import com.mifos.shared.utility.ShakeAnimation.performShakeAnimation
-import com.mifos.shared.utility.Step
 import com.mifos.shared.viewmodels.BiometricAuthorizationViewModel
 import com.mifos.shared.viewmodels.BiometricEffect
 import com.mifos.shared.viewmodels.PasscodeViewModel
 import com.mifos.shared.resources.Res
 import com.mifos.shared.resources.biometric_registration_success
+import com.mifos.shared.resources.ok
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
@@ -62,13 +60,14 @@ import org.jetbrains.compose.resources.getString
 @Composable
 fun PasscodeScreen(
     viewModel: PasscodeViewModel = viewModel { PasscodeViewModel() },
-    biometricAuthorizationViewModel: BiometricAuthorizationViewModel,
-    bioMetricUtil: BioMetricUtil,
     onForgotButton: () -> Unit,
     onSkipButton: () -> Unit,
     onPasscodeConfirm: (String) -> Unit,
     onPasscodeRejected: () -> Unit,
-    onBiometricAuthSuccess: () -> Unit
+    enableBiometric: Boolean = false,
+    onBiometricAuthSuccess: () -> Unit = {},
+    biometricAuthorizationViewModel: BiometricAuthorizationViewModel = viewModel(),
+    bioMetricUtil: BioMetricUtil? = null,
 ) {
     val preferenceManager = remember { PreferenceManager() }
     val activeStep by viewModel.activeStep.collectAsState()
@@ -80,19 +79,40 @@ fun PasscodeScreen(
     val biometricState by biometricAuthorizationViewModel.state.collectAsState()
     var biometricMessage by rememberSaveable { mutableStateOf("") }
     val coroutineScope = rememberCoroutineScope()
+    var showBiometricDialog by rememberSaveable{ mutableStateOf(false) }
 
-    biometricState.error?.let {
-        biometricMessage = it
+
+    if(showBiometricDialog)
+    {
+        PasscodeBiometricConfirmDialog(
+            setBiometric = {
+                biometricAuthorizationViewModel.setBiometricAuthorization(bioMetricUtil!!)
+            },
+            cancelBiometric = {
+                showBiometricDialog = false
+            }
+        )
+    }
+
+    if(enableBiometric) {
+        biometricState.error?.let {
+            biometricMessage = it
+        }
     }
 
     LaunchedEffect(key1 = Unit) {
-        biometricAuthorizationViewModel.effect.collectLatest {
-            when (it) {
-                BiometricEffect.BiometricAuthSuccess -> {
-                    onBiometricAuthSuccess.invoke()
-                }
-                BiometricEffect.BiometricSetSuccess -> {
-                    biometricMessage = getString( Res.string.biometric_registration_success )
+        if(enableBiometric) {
+            biometricAuthorizationViewModel.effect.collectLatest {
+                when (it) {
+                    BiometricEffect.BiometricAuthSuccess -> {
+                        onBiometricAuthSuccess.invoke()
+                        showBiometricDialog = false
+                    }
+
+                    BiometricEffect.BiometricSetSuccess -> {
+                        biometricMessage = getString(Res.string.biometric_registration_success)
+                        showBiometricDialog = false
+                    }
                 }
             }
         }
@@ -112,15 +132,13 @@ fun PasscodeScreen(
         }
     }
 
-    LaunchedEffect(activeStep) {
-        if (activeStep == Step.Confirm) {
-            biometricAuthorizationViewModel.setBiometricAuthorization(bioMetricUtil)
+    LaunchedEffect(true) {
+        if(preferenceManager.hasPasscode && enableBiometric) {
+            if(bioMetricUtil!!.isBiometricSet())
+                biometricAuthorizationViewModel.authorizeBiometric(bioMetricUtil)
+            else
+                showBiometricDialog = true
         }
-    }
-
-    LaunchedEffect(true){
-        if(preferenceManager.hasPasscode)
-            biometricAuthorizationViewModel.authorizeBiometric(bioMetricUtil)
     }
 
     val snackBarHostState = remember {
@@ -175,14 +193,16 @@ fun PasscodeScreen(
                 onForgotButton = { onForgotButton.invoke() },
                 hasPassCode = preferenceManager.hasPasscode
             )
+
             UseTouchIdButton(
                 onClick = {
-                    if(bioMetricUtil.isBiometricSet())
+                    if ( bioMetricUtil!!.isBiometricSet() )
                         biometricAuthorizationViewModel.authorizeBiometric(bioMetricUtil)
                     else
-                        biometricAuthorizationViewModel.setBiometricAuthorization(bioMetricUtil)
+                        showBiometricDialog = true
                 },
-                hasPassCode = preferenceManager.hasPasscode
+                hasPassCode = preferenceManager.hasPasscode,
+                enableBiometric = enableBiometric
             )
 
             LaunchedEffect ( biometricMessage ) {
@@ -192,7 +212,7 @@ fun PasscodeScreen(
                             message = biometricMessage,
                             duration = SnackbarDuration.Short,
                             withDismissAction = false,
-                            actionLabel = "Ok"
+                            actionLabel = getString(Res.string.ok)
                         )
                     }
                 }

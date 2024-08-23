@@ -4,7 +4,7 @@ interface ICipherUtil {
     @Throws(Exception::class)
     fun generateKeyPair(): CommonKeyPair
 
-    fun getPublicKey(): CommonPublicKey
+    fun getPublicKey(): CommonPublicKey?
 
     @Throws(Exception::class)
     fun getCrypto(): Crypto

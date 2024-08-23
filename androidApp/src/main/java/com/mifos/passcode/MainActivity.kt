@@ -17,6 +17,7 @@ import com.mifos.shared.component.PasscodeScreen
 
 
 class MainActivity : FragmentActivity() {
+
     private val bioMetricUtil by lazy {
         BiometricUtilAndroidImpl(this, CipherUtilAndroidImpl())
     }
@@ -24,23 +25,23 @@ class MainActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         bioMetricUtil.preparePrompt(
             title= getString(R.string.biometric_auth_title),
             subtitle = "",
             description = getString(R.string.biometric_auth_description)
         )
         passcodeRepository = PasscodeRepositoryImpl(PreferenceManager())
-        setContent {
-            val biometricViewModel: BiometricAuthorizationViewModel = viewModel()
 
+        setContent {
             PasscodeScreen(
                 onForgotButton = { onPasscodeForgot() },
                 onSkipButton = { onPasscodeSkip() },
                 onPasscodeConfirm = { onPassCodeReceive(it) },
                 onPasscodeRejected = { onPasscodeReject() },
+                enableBiometric = true,
                 bioMetricUtil = bioMetricUtil,
-                biometricAuthorizationViewModel = biometricViewModel,
-                onBiometricAuthSuccess = { launchNextActivity() }
+                onBiometricAuthSuccess = { launchNextActivity() },
             )
         }
     }

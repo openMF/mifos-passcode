@@ -25,9 +25,9 @@ class CipherUtilAndroidImpl: ICipherUtil {
         return keyPairGenerator.genKeyPair()
     }
 
-    override fun getPublicKey(): PublicKey = getKeyPair().public
+    override fun getPublicKey(): PublicKey? = getKeyPair()?.public
 
-    private fun getKeyPair(): KeyPair {
+    private fun getKeyPair(): KeyPair? {
         val keyStore = KeyStore.getInstance("AndroidKeyStore")
         keyStore.load(null)
         keyStore?.getCertificate(KEY_NAME).let { return KeyPair(it?.publicKey, null) }
