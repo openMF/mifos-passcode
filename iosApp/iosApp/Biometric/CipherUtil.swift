@@ -67,7 +67,7 @@ class CipherUtilIosImpl: ICipherUtil {
         return Crypto()
     }
     
-    func getPublicKey() -> any CommonPublicKey {
+    func getPublicKey() -> (any CommonPublicKey)? {
         let savedPublicKey = UserDefaults.standard.string(forKey: "PublicKey")
         if (savedPublicKey != nil) {
             return CommonPublicKeyImpl(encoded: savedPublicKey!)
