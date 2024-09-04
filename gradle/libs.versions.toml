@@ -44,6 +44,10 @@ sonner = "0.3.8"
 uiToolingPreviewAndroid = "1.6.8"
 uiAndroid = "1.6.8"
 appcompatVersion = "1.7.0"
+testng = "6.9.6"
+monitor = "1.6.1"
+runnerVersion = "1.5.2"
+junitVersion = "4.12"
 
 [libraries]
 android-maven-gradle-plugin = { module = "com.github.dcendents:android-maven-gradle-plugin", version.ref = "androidMavenGradlePlugin" }
@@ -101,6 +105,10 @@ hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-com
 androidx-ui-tooling-preview-android = { group = "androidx.compose.ui", name = "ui-tooling-preview-android", version.ref = "uiToolingPreviewAndroid" }
 androidx-ui-android = { group = "androidx.compose.ui", name = "ui-android", version.ref = "uiAndroid" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompatVersion" }
+testng = { group = "org.testng", name = "testng", version.ref = "testng" }
+androidx-monitor = { group = "androidx.test", name = "monitor", version.ref = "monitor" }
+runner = { group = "androidx.test", name = "runner", version.ref = "runnerVersion" }
+junit-junit = { group = "junit", name = "junit", version.ref = "junitVersion" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
