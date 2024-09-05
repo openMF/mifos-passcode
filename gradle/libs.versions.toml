@@ -15,7 +15,6 @@ compose = "1.5.4"
 compose-material3 = "1.1.2"
 androidx-activityCompose = "1.8.0"
 kotlinBom = "1.8.0"
-kotlinStdlibJdk8 = "1.7.20"
 kvault = "1.12.0"
 lifecycleViewmodelKtx = "2.8.1"
 compose-plugin = "1.6.10"
@@ -72,7 +71,6 @@ gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 gradle-bintray-plugin = { module = "com.jfrog.bintray.gradle:gradle-bintray-plugin", version.ref = "gradleBintrayPlugin" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltCompiler" }
 kotlin-bom-v180 = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlinBom" }
-kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlinStdlibJdk8" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }

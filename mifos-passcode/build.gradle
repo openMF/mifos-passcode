@@ -68,7 +68,7 @@ dependencies {
     androidTestImplementation libs.androidx.runner
     androidTestImplementation libs.androidx.espresso.core.v360alpha01
     implementation libs.androidx.core.ktx.v1131
-    implementation libs.kotlin.stdlib.jdk8
+    implementation libs.kotlin.bom
 }
 
 tasks.withType(Javadoc) {
