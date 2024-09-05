@@ -15,4 +15,5 @@ dependencyResolutionManagement {
 include ':androidApp'
 include ':mifos-passcode'
 include ':compose'
-include ':shared'
+include ':sample:shared'
+include ':cmp-mifos-passcode'
