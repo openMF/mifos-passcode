@@ -46,7 +46,6 @@ appcompatVersion = "1.7.0"
 testng = "6.9.6"
 monitor = "1.6.1"
 runnerVersion = "1.5.2"
-junitVersion = "4.12"
 
 [libraries]
 android-maven-gradle-plugin = { module = "com.github.dcendents:android-maven-gradle-plugin", version.ref = "androidMavenGradlePlugin" }
@@ -106,7 +105,6 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 testng = { group = "org.testng", name = "testng", version.ref = "testng" }
 androidx-monitor = { group = "androidx.test", name = "monitor", version.ref = "monitor" }
 runner = { group = "androidx.test", name = "runner", version.ref = "runnerVersion" }
-junit-junit = { group = "junit", name = "junit", version.ref = "junitVersion" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
