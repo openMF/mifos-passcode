@@ -4,6 +4,7 @@ agp = "8.3.0"
 androidMavenGradlePlugin = "2.1"
 androidxNavigationCompose = "2.7.6"
 cmpPreference = "1.0.0"
+constraintlayout = "2.1.4"
 coreKtxVersion = "1.13.1"
 espressoCoreVersion = "3.6.0-alpha01"
 gradle = "8.3.1"
@@ -51,6 +52,7 @@ runnerVersion = "1.5.2"
 android-maven-gradle-plugin = { module = "com.github.dcendents:android-maven-gradle-plugin", version.ref = "androidMavenGradlePlugin" }
 androidx-activity-compose-v182 = { module = "androidx.activity:activity-compose", version.ref = "activityComposeVersion" }
 androidx-biometric = { module = "androidx.biometric:biometric", version.ref = "biometricKtx" }
+androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
 androidx-core-ktx-v1131 = { module = "androidx.core:core-ktx", version.ref = "coreKtxVersion" }
 androidx-espresso-core-v360alpha01 = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCoreVersion" }
 androidx-hilt-navigation-compose-v120 = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationComposeVersion" }
