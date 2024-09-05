@@ -70,6 +70,7 @@ dependencies {
     implementation libs.androidx.core.ktx.v1131
     implementation platform(libs.kotlin.bom)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.biometric)
 }
 
 tasks.withType(Javadoc) {
