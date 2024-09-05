@@ -41,7 +41,7 @@ android {
 dependencies {
 
     implementation libs.androidx.core.ktx.v1131
-    implementation libs.kotlin.bom.v180
+    implementation platform(libs.kotlin.bom)
     implementation libs.appcompat
     implementation libs.material
     implementation project(':sample:shared')
