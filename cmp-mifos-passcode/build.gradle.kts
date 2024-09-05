@@ -51,7 +51,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.mifos.shared"
+    namespace = "com.mifos.cmp.mifos.passcode"
     compileSdk = 35
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
@@ -71,6 +71,6 @@ dependencies {
 
 compose.resources {
     publicResClass = true
-    packageOfResClass = "com.mifos.shared.resources"
+    packageOfResClass = "com.mifos.cmp-mifos-passcode.resources"
     generateResClass = always
 }
