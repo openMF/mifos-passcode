@@ -47,6 +47,7 @@ kotlin {
             implementation (libs.androidx.biometric)
         }
     }
+    tasks.register("testClasses")
 }
 
 android {

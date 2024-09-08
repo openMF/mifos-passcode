@@ -61,14 +61,14 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation libs.appcompat
+    implementation libs.androidx.appcompat
     implementation libs.material
 
     testImplementation libs.junit
-    androidTestImplementation libs.androidx.runner
-    androidTestImplementation libs.androidx.espresso.core.v360alpha01
+    androidTestImplementation libs.runner
+    androidTestImplementation libs.androidx.espresso.core
     implementation libs.androidx.core.ktx.v1131
-    implementation libs.kotlin.stdlib.jdk8
+    implementation platform(libs.kotlin.bom)
 }
 
 tasks.withType(Javadoc) {
