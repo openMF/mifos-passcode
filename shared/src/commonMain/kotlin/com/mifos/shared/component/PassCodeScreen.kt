@@ -37,8 +37,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.mifos.shared.Platform
-import com.mifos.shared.getPlatform
 import com.mifos.shared.utility.BioMetricUtil
 import com.mifos.shared.utility.PreferenceManager
 import com.mifos.shared.theme.blueTint
@@ -120,7 +118,7 @@ fun PasscodeScreen(
 
     LaunchedEffect(true){
         if(preferenceManager.hasPasscode)
-            biometricAuthorizationViewModel.authorizeBiometric(bioMetricUtil)
+        biometricAuthorizationViewModel.authorizeBiometric(bioMetricUtil)
     }
 
     val snackBarHostState = remember {
