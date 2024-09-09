@@ -56,8 +56,7 @@ dependencies {
     androidTestImplementation libs.testng
     androidTestImplementation libs.androidx.monitor
     androidTestImplementation libs.runner
-    androidTestImplementation libs.junit
-    testImplementation libs.junit
+    androidTestImplementation libs.junit.junit
     androidTestImplementation libs.runner
     androidTestImplementation libs.androidx.monitor
     debugImplementation(libs.compose.ui.tooling)
