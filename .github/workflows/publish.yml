@@ -1,9 +1,5 @@
 name: Publish
 on:
-  push:
-    paths:
-      - 'cmp-mifos-passcode/**'
-      - 'sample/**'
   workflow_dispatch:
     inputs:
       versionName:
