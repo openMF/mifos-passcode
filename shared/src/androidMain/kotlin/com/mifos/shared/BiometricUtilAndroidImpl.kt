@@ -42,7 +42,7 @@ class BiometricUtilAndroidImpl(
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun getPublicKey(): String? {
-        return cipherUtil.getPublicKey()?.encoded?.toBase64Encoded()?.toPemFormat()?.toBase64Encoded()
+        return cipherUtil.getPublicKey().encoded?.toBase64Encoded()?.toPemFormat()?.toBase64Encoded()
     }
 
     override fun isValidCrypto(): Boolean {

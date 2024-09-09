@@ -26,9 +26,4 @@
     <string name="authentication_not_set">Authentication not set</string>
     <string name="authentication_not_available">Feature unavailable</string>
     <string name="biometric_registration_success">Biometric Registration Successful !</string>
-    <string name="enable_biometric_dialog_title">Do you want to enable app lock ?</string>
-    <string name="enable_biometric_dialog_description">Use your existing PIN, pattern, face ID, or fingerprint to unlock this app.</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="ok">Ok</string>
 </resources>

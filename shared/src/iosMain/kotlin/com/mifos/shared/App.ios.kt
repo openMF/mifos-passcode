@@ -19,7 +19,6 @@ fun MainViewController(
         bioMetricUtil = bioMetricUtil,
         biometricAuthorizationViewModel = biometricViewModel,
         onBiometricAuthSuccess = {
-         },
-        enableBiometric = true
+         }
     )
 }
