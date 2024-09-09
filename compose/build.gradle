@@ -44,7 +44,7 @@ dependencies {
     implementation libs.kotlin.bom.v180
     implementation libs.appcompat
     implementation libs.material
-    implementation project(':sample:shared')
+    implementation project(':shared')
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
