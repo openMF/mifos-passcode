@@ -35,7 +35,7 @@ android {
     }
     defaultConfig {
         namespace "com.mifos.mobile.passcode"
-        minSdk 24
+        minSdk 15
         targetSdk 34
         versionCode 2
         versionName "1.0.0"
