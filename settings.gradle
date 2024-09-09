@@ -1,18 +1,2 @@
-pluginManagement {
-    repositories {
-        google()
-        gradlePluginPortal()
-        mavenCentral()
-    }
-}
-
-dependencyResolutionManagement {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-include ':androidApp'
-include ':mifos-passcode'
+include ':app', ':mifos-passcode'
 include ':compose'
-include ':shared'
