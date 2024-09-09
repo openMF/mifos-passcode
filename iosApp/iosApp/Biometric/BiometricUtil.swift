@@ -49,11 +49,11 @@ class BiometricUtilIosImpl: BioMetricUtil {
     }
     
     func getPublicKey() -> String? {
-        return cipherUtil.getPublicKey()?.encoded?.toPemFormat().toBase64()
+        return cipherUtil.getPublicKey().encoded.toPemFormat().toBase64()
     }
     
     func isBiometricSet() -> Bool {
-        return (getPublicKey() != nil) && isValidCrypto()
+        return UserDefaults.standard.string(forKey: "PublicKey") == nil
     }
     
     func isValidCrypto() -> Bool {
