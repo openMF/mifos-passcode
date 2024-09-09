@@ -9,6 +9,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.mifos.shared.Platform
 import com.mifos.shared.getPlatform
 import com.mifos.shared.theme.forgotButtonStyle
 import com.mifos.shared.theme.skipButtonStyle
@@ -69,10 +70,9 @@ fun PasscodeForgotButton(
 @Composable
 fun UseTouchIdButton(
     onClick: () -> Unit,
-    hasPassCode: Boolean,
-    enableBiometric: Boolean
+    hasPassCode: Boolean
 ) {
-    if (hasPassCode && enableBiometric) {
+    if (hasPassCode) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
