@@ -39,7 +39,6 @@ kotlin {
             implementation(compose.components.resources)
             implementation(libs.navigation.compose)
             implementation(libs.multiplatform.settings.no.arg)
-            implementation(project(":cmp-mifos-passcode"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -48,7 +47,6 @@ kotlin {
             implementation (libs.androidx.biometric)
         }
     }
-    task("testClasses")
 }
 
 android {
