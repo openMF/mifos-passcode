@@ -36,7 +36,7 @@ class BiometricUtilAndroidImpl(
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun generatePublicKey(): String? {
+    override suspend fun generatePublicKey(): String? {
         return cipherUtil.generateKeyPair().public?.encoded?.toBase64Encoded()?.toPemFormat()?.toBase64Encoded()
     }
 

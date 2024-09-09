@@ -3,7 +3,6 @@ import shared
 import LocalAuthentication
 
 class BiometricUtilIosImpl: BioMetricUtil {
-
     private let cipherUtil = CipherUtilIosImpl()
     
     private var promptDescription: String = "Authenticate"
@@ -18,7 +17,7 @@ class BiometricUtilIosImpl: BioMetricUtil {
 
             DispatchQueue.main.async {
                 if success {
-                    completionHandler(self?.generatePublicKey(), nil)
+                    completionHandler(self?.getPublicKey(), nil)
                 } else {
                     completionHandler(nil, authenticationError)
                 }
@@ -43,9 +42,9 @@ class BiometricUtilIosImpl: BioMetricUtil {
     }
     
     
-    func generatePublicKey() -> String? {
-        let keyPair = try? cipherUtil.generateKeyPair()
-        return keyPair?.publicKey?.toPemFormat().toBase64()
+    func generatePublicKey() async throws -> String? {
+        let keyPair = try cipherUtil.generateKeyPair()
+        return keyPair.publicKey?.toPemFormat().toBase64()
     }
     
     func getPublicKey() -> String? {
