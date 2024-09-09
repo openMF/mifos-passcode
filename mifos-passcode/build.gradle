@@ -69,7 +69,6 @@ dependencies {
     androidTestImplementation libs.androidx.espresso.core.v360alpha01
     implementation libs.androidx.core.ktx.v1131
     implementation platform(libs.kotlin.bom)
-    implementation(libs.androidx.constraintlayout)
 }
 
 tasks.withType(Javadoc) {
