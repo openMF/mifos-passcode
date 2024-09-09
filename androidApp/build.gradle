@@ -63,7 +63,6 @@ dependencies {
     debugImplementation(libs.compose.ui.tooling)
     implementation (libs.androidx.navigation.compose.v276)
     implementation (libs.androidx.biometric)
-    implementation(libs.androidx.constraintlayout)
 }
 repositories {
     mavenCentral()
