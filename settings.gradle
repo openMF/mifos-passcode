@@ -12,6 +12,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
 include ':androidApp'
 include ':mifos-passcode'
 include ':compose'

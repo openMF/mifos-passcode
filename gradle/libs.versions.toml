@@ -6,14 +6,13 @@ espressoCoreVersion = "3.6.0-alpha01"
 gradle = "8.3.1"
 hiltCompiler = "2.48.1"
 hiltNavigationComposeVersion = "1.2.0"
-kotlin = "2.0.0"
+kotlin = "2.1.0"
 compose = "1.5.4"
 compose-material3 = "1.1.2"
 androidx-activityCompose = "1.8.0"
 kotlinStdlibJdk8 = "1.7.20"
 lifecycleViewmodelKtx = "2.8.1"
 compose-plugin = "1.6.10"
-multiplatformSettings = "1.0.0"
 navigationCompose = "2.7.7"
 navigationComposeVersion = "2.7.0-alpha07"
 dagger-hilt = "2.48.1"
@@ -31,6 +30,13 @@ appcompatVersion = "1.7.0"
 testng = "6.9.6"
 monitor = "1.6.1"
 runnerVersion = "1.5.2"
+koin = "4.0.1-RC1"
+protobuf = "4.26.0"
+protobufPlugin = "0.9.4"
+kotlinxSerializationJson = "1.7.3"
+multiplatformSettings = "1.2.0"
+kotlinxCoroutines = "1.9.0"
+gradle-plugin = "8.2.0"
 
 [libraries]
 android-maven-gradle-plugin = { module = "com.github.dcendents:android-maven-gradle-plugin", version.ref = "androidMavenGradlePlugin" }
@@ -68,6 +74,36 @@ testng = { group = "org.testng", name = "testng", version.ref = "testng" }
 androidx-monitor = { group = "androidx.test", name = "monitor", version.ref = "monitor" }
 runner = { group = "androidx.test", name = "runner", version.ref = "runnerVersion" }
 
+protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
+
+kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin" }
+
+jb-kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+
+kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinxSerializationJson" }
+
+multiplatform-settings = { group = "com.russhwolf", name = "multiplatform-settings-no-arg", version.ref = "multiplatformSettings" }
+multiplatform-settings-coroutines = { group = "com.russhwolf", name = "multiplatform-settings-coroutines", version.ref = "multiplatformSettings" }
+multiplatform-settings-serialization = { group = "com.russhwolf", name = "multiplatform-settings-serialization", version.ref = "multiplatformSettings" }
+
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+
+kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinxCoroutines" }
+
+protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
+
+koin-compose = { group = "io.insert-koin", name = "koin-compose", version.ref = "koin" }
+koin-compose-viewmodel = { group = "io.insert-koin", name = "koin-compose-viewmodel", version.ref = "koin" }
+
+android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "gradle-plugin" }
+gradle-plugin-development = { module = "org.gradle:gradle-plugin-development", version.ref = "gradle-plugin" }
+
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-material-iconsExtended = { group = "androidx.compose.material", name = "material-icons-extended" }
+compose-gradlePlugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
@@ -78,3 +114,10 @@ kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = 
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger-hilt" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
+
+protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
+
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+
+mifospay-cmp-feature = { id = "mifospay.cmp.feature", version = "unspecified" }
