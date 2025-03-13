@@ -9,6 +9,8 @@ plugins {
 //    alias(libs.plugins.mifos.spotless.plugin)
 //    alias(libs.plugins.mifospay.cmp.feature)
 //    alias(libs.plugins.kotlin.parcelize)
+//    alias(com.google.devtools.ksp)
+    alias(libs.plugins.devToolsKsp)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.protobuf)
@@ -74,8 +76,25 @@ kotlin {
     }
 
     sourceSets {
+
+        commonTest.dependencies{
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.kotlin.test)
+            implementation(libs.koin.test)
+        }
+
         commonMain {
             dependencies {
+                // This Belongs To Koinlibrary
+                implementation(libs.koin.bom)
+                implementation(libs.koin.core)
+                implementation(libs.koin.annotations)
+                implementation(libs.koin.ksp.compiler)
+                implementation(libs.koin.compose.viewmodel)
+                implementation(libs.koin.compose)
+                implementation(libs.koin.core.viewmodel)
+                implementation(libs.koin.test.junit4)
+
                 implementation(libs.jb.composeRuntime)
                 implementation(libs.jb.composeViewmodel)
                 implementation(libs.jb.lifecycleViewmodel)
@@ -96,8 +115,6 @@ kotlin {
                 implementation(libs.multiplatform.settings.coroutines)
 
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.kotlinx.coroutines.test)
-                implementation(libs.kotlin.test)
 
 //                implementation(compose.ui)
 //                implementation(compose.foundation)
@@ -105,13 +122,6 @@ kotlin {
 //                implementation(compose.materialIconsExtended)
 //                implementation(compose.components.resources)
 //                implementation(compose.components.uiToolingPreview)
-
-                implementation(libs.koin.compose.viewmodel)
-                implementation(libs.koin.compose)
-
-                implementation(libs.koin.bom)
-                implementation(libs.koin.core.viewmodel)
-                implementation(libs.koin.test.junit4)
             }
         }
 
