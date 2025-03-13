@@ -20,7 +20,7 @@ ext {
 
     publishedGroupId = 'com.mifos.mobile'
     libraryName = 'mifos-passcode'
-    artifact = 'mifos-passcode' // artifact name and library name should be same.
+    artifact = 'mifos-passcode'
 
     libraryDescription = 'A Library as feature of passcode'
 
@@ -64,91 +64,81 @@ android {
     buildFeatures {
         viewBinding = true
     }
-//    kotlinOptions {
-//        jvmTarget = '17'
-//    }
 }
 
 kotlin {
-    sourceSets {
-        compose {
-            implementation(compose.ui)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.materialIconsExtended)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
-
-            implementation(libs.koin.compose.viewmodel)
-            implementation(libs.koin.compose)
-        }
-        commonMain.dependencies {
-
-            implementation(libs.jb.composeRuntime)
-            implementation(libs.jb.composeViewmodel)
-            implementation(libs.jb.lifecycleViewmodel)
-            implementation(libs.jb.lifecycleViewmodelSavedState)
-            implementation(libs.jb.savedstate)
-            implementation(libs.jb.bundle)
-            implementation(libs.jb.composeNavigation)
-            implementation(libs.kotlinx.collections.immutable)
-
-            implementation(libs.jb.kotlin.stdlib)
-            implementation(libs.kotlin.reflect)
-
-            api(libs.protobuf.kotlin.lite)
-            implementation(libs.kotlinx.serialization.core)
-
-            implementation(libs.multiplatform.settings)
-            implementation(libs.multiplatform.settings.serialization)
-            implementation(libs.multiplatform.settings.coroutines)
-
-            implementation(libs.kotlinx.coroutines.core)
-
-//            implementation(project(":core:ui"))
-//            implementation(project(":core:designsystem"))
-//            implementation(project(":core:data"))
-        }
-
-        desktopMain.dependencies {
-            implementation(libs.kotlinx.coroutines.swing)
-        }
-    }
-
     androidTarget {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
         }
     }
-}
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation(libs.jb.composeRuntime)
+                implementation(libs.jb.composeViewmodel)
+                implementation(libs.jb.lifecycleViewmodel)
+                implementation(libs.jb.lifecycleViewmodelSavedState)
+                implementation(libs.jb.savedstate)
+                implementation(libs.jb.bundle)
+                implementation(libs.jb.composeNavigation)
+                implementation(libs.kotlinx.collections.immutable)
 
-    implementation libs.androidx.appcompat
-    implementation libs.material
+                implementation(libs.jb.kotlin.stdlib)
+                implementation(libs.kotlin.reflect)
 
-    testImplementation libs.junit
-    androidTestImplementation libs.runner
-    androidTestImplementation libs.androidx.espresso.core
-    implementation libs.androidx.core.ktx.v1131
-    implementation platform(libs.kotlin.bom)
+                api(libs.protobuf.kotlin.lite)
+                implementation(libs.kotlinx.serialization.core)
 
-    implementation(libs.androidx.lifecycle.runtimeCompose.alt)
-    implementation(libs.androidx.lifecycle.viewModelCompose)
-    implementation(libs.androidx.tracing.ktx)
+                implementation(libs.multiplatform.settings)
+                implementation(libs.multiplatform.settings.serialization)
+                implementation(libs.multiplatform.settings.coroutines)
 
-    implementation(platform(libs.koin.bom))
-    implementation(libs.koin.android)
-    implementation(libs.koin.androidx.compose)
-    implementation(libs.koin.androidx.navigation)
-    implementation(libs.koin.core.viewmodel)
-    implementation(libs.koin.test.junit4)
-    implementation(libs.androidx.navigation.testing)
-    implementation(libs.androidx.compose.ui.test)
-    implementation(libs.androidx.lifecycle.runtimeTesting)
-    implementation(libs.kotlin.test)
-    implementation(libs.kotlinx.coroutines.test)
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.kotlinx.coroutines.test)
+                implementation(libs.kotlin.test)
+
+//                implementation(compose.ui)
+//                implementation(compose.foundation)
+//                implementation(compose.material3)
+//                implementation(compose.materialIconsExtended)
+//                implementation(compose.components.resources)
+//                implementation(compose.components.uiToolingPreview)
+
+                implementation(libs.koin.compose.viewmodel)
+                implementation(libs.koin.compose)
+
+                implementation(libs.koin.bom)
+                implementation(libs.koin.core.viewmodel)
+                implementation(libs.koin.test.junit4)
+            }
+        }
+
+        androidMain {
+            dependencies {
+                implementation(libs.androidx.appcompat)
+                implementation(libs.material)
+                implementation(libs.androidx.lifecycle.runtimeCompose.alt)
+                implementation(libs.androidx.lifecycle.viewModelCompose)
+                implementation(libs.androidx.tracing.ktx)
+
+                implementation(libs.androidx.navigation.testing)
+                implementation(libs.androidx.compose.ui.test)
+                implementation(libs.androidx.lifecycle.runtimeTesting)
+
+                implementation(libs.koin.android)
+                implementation(libs.koin.androidx.compose)
+                implementation(libs.koin.androidx.navigation)
+            }
+        }
+
+        desktopMain {
+            dependencies {
+                implementation(libs.kotlinx.coroutines.swing)
+            }
+        }
+    }
 }
 
 tasks.withType(Javadoc) {
@@ -161,6 +151,7 @@ tasks.withType(Javadoc) {
 repositories {
     mavenCentral()
 }
+
 // Used this article to release the library
 // https://inthecheesefactory.com/blog/how-to-upload-library-to-jcenter-maven-central-as-dependency/en
 
