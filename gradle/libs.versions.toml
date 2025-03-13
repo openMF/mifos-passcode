@@ -128,6 +128,7 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger-hilt" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 
+
 mifospay-kmp-koin = { id = "mifospay.kmp.koin", version = "unspecified" }
 mifos-detekt-plugin = { id = "mifos.detekt.plugin", version = "unspecified" }
 mifos-spotless-plugin = { id = "mifos.spotless.plugin", version = "unspecified" }
