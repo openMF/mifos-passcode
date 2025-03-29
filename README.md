@@ -1,5 +1,24 @@
-# Mobile-Passcode
+# Mifos-Passcode
 Library for passcode implementation along with an optional additional feature to ask for passcode when your app resumes from background. (Works with minSDK >= 21)
+
+# Project Structure :
+
+- **`androidApp` Module**:
+  - Contains the Android-specific application code.
+  - Depends on the `shared` module to utilize common code across platforms.
+
+- **`iosApp` Module**:
+  - Holds the iOS-specific application code.
+  - Integrates the `shared` module, typically as a framework, to access shared logic.
+
+- **`shared` Module**:
+  - The core module containing platform-agnostic code, including business logic and Compose Multiplatform UI components.
+  - Referenced by both `androidApp` and `iosApp` modules to promote code reuse.
+
+- **`cmp-mifos-passcode` Module**:
+  - A specialized module designed to package and publish the `shared` module as a Compose Multiplatform (CMP) library.
+  - Facilitates the distribution and reuse of the shared codebase across different projects or teams.
+
 
 Usage
 -----
@@ -27,7 +46,13 @@ dependencies {
 
 ## Example
 
-https://github.com/openMF/mifos-passcode/assets/90026952/ee9e9610-fdb6-49d3-b485-9eb9cd78fb9f
+## Android Implementation:
+
+https://github.com/user-attachments/assets/a93781d1-13b6-4c48-a2c1-2021ca56fd0b
+
+## IOS Implementation : 
+
+https://github.com/user-attachments/assets/9267d7ad-1e95-4212-8f5b-4516413e8b5d
 
 For a basic implementation of the PassCode Screen
 - Inject the `PasscodeRepository` in your activity which is essentially abstracting the operations related to saving, retrieving, and validating the passcode
