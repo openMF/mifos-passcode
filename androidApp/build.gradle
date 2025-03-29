@@ -46,7 +46,6 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation(project(":compose"))
     implementation project(':shared')
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)
@@ -57,11 +56,13 @@ dependencies {
     androidTestImplementation libs.androidx.monitor
     androidTestImplementation libs.runner
     androidTestImplementation libs.junit
+    testImplementation libs.junit
     androidTestImplementation libs.runner
     androidTestImplementation libs.androidx.monitor
     debugImplementation(libs.compose.ui.tooling)
     implementation (libs.androidx.navigation.compose)
     implementation (libs.androidx.biometric)
+    implementation(libs.androidx.constraintlayout)
 }
 repositories {
     mavenCentral()

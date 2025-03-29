@@ -17,7 +17,7 @@ public class ExampleInstrumentedTest {
     @Test
     public void useAppContext() {
         // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
         assertEquals("com.mifos.passcode", appContext.getPackageName());
     }

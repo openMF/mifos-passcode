@@ -1,5 +1,5 @@
 Pod::Spec.new do |spec|
-    spec.name                     = 'shared'
+    spec.name                     = 'cmp_mifos_passcode'
     spec.version                  = '1.0'
     spec.homepage                 = 'Link to the Shared Module homepage'
     spec.source                   = { :http=> ''}
@@ -17,7 +17,7 @@ Pod::Spec.new do |spec|
         Kotlin framework 'shared' doesn't exist yet, so a proper Xcode project can't be generated.
         'pod install' should be executed after running ':generateDummyFramework' Gradle task:
 
-            ./gradlew :shared:generateDummyFramework
+            ./gradlew :cmp-mifos-passcode:generateDummyFramework
 
         Alternatively, proper pod installation is performed during Gradle sync in the IDE (if Podfile location is set)"
     end
@@ -27,13 +27,13 @@ Pod::Spec.new do |spec|
     }
                 
     spec.pod_target_xcconfig = {
-        'KOTLIN_PROJECT_PATH' => ':shared',
+        'KOTLIN_PROJECT_PATH' => ':cmp-mifos-passcode',
         'PRODUCT_MODULE_NAME' => 'shared',
     }
                 
     spec.script_phases = [
         {
-            :name => 'Build shared',
+            :name => 'Build cmp_mifos_passcode',
             :execution_position => :before_compile,
             :shell_path => '/bin/sh',
             :script => <<-SCRIPT
