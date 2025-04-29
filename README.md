@@ -1,6 +1,24 @@
 # Mifos-Passcode
 Library for passcode implementation along with an optional additional feature to ask for passcode when your app resumes from background. (Works with minSDK >= 21)
 
+# 📦 Archived Repository Notice
+
+> **⚠️ This repository is archived and no longer maintained.**
+
+Development for **Mifos Passcode** has been **moved to a new repository** built with Kotlin Multiplatform technology.
+
+### 🔄 New Repository
+
+Please refer to the actively maintained repository here:  
+👉 [https://github.com/openMF/mifos-passcode-cmp](https://github.com/openMF/mifos-passcode-cmp)
+
+### 📌 Why the move?
+
+This transition allows for:
+- ✨ Modernized architecture using **Kotlin Multiplatform (KMP)**
+- ✅ Shared logic across Android, iOS, and other platforms
+- 🚀 Improved performance, testability, and scalability
+
 # Project Structure :
 
 - **`androidApp` Module**:
